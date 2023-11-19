@@ -37,3 +37,23 @@
     transform: translateY(0px);
   }
 }
+
+
+@font-face {
+  font-family: ultra;
+  src: url(../public/Ultra-Regular.ttf);
+}
+
+.ultra {
+  font-family: ultra;
+}
+
+
+@font-face {
+  font-family: agbalumo;
+  src: url(../public/Agbalumo-Regular.ttf);
+}
+
+.agbalumo {
+  font-family: agbalumo;
+}
