@@ -1,20 +1,22 @@
 import React from "react";
 import Navbar from "../features/navbar/Navbar";
 import { Link } from "react-router-dom";
+import SoapBubbleBackground from "../features/common/SoapBubbleBackground";
 
 const Homepage = () => {
   return (
     <Navbar>
       {/* title section */}
-      <section className="relative z-10 overflow-hidden bg-white pb-16 pt-[120px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]">
+      <SoapBubbleBackground></SoapBubbleBackground>
+      <section className="relative z-[-1] overflow-hidden bg-[#1D2430] pb-16 pt-[120px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className=" mx-auto max-w-[800px] text-center">
-                <h1 className="agbalumo mb-5 text-3xl font-bold leading-tight text-black  sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
+                <h1 className="agbalumo mb-5 text-3xl font-bold leading-tight text-white  sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight custom-text-shadow">
                   Nostalgia Memory
                 </h1>
-                <p className=" mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl">
+                <p className="text-gray-200 mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl">
                   "Reviving Memories, Connecting Hearts."
                   <br />
                   Friendly, sentimental, and inclusive. Use storytelling to
@@ -25,7 +27,7 @@ const Homepage = () => {
             </div>
           </div>
         </div>
-        <div className="absolute right-0 top-0 z-20 opacity-30 lg:opacity-100 ">
+        <div className="absolute right-0 top-0 z-[-1] opacity-30 lg:opacity-100 ">
           <svg
             width="450"
             height="556"
@@ -163,7 +165,7 @@ const Homepage = () => {
             </defs>
           </svg>
         </div>
-        <div className="absolute bottom-0 left-0 z-1 opacity-30 lg:opacity-100">
+        <div className="absolute bottom-0 left-0 z-[-1] opacity-30 lg:opacity-100">
           <svg
             width="364"
             height="201"
@@ -268,13 +270,13 @@ const Homepage = () => {
         </div>
       </section>
       {/* title section */}
-      <section className="relative z-10 py-16 md:py-20 lg:py-28">
+      <section className=" bg-[#1D2430] relative z-[-1] py-16 md:py-20 lg:py-28">
         <div className="container">
           <div className={`w-full mx-auto text-center`}>
-            <h2 className="agbalumo mb-4 text-3xl font-bold !leading-tight text-black sm:text-4xl md:text-[45px] ">
+            <h2 className="agbalumo mb-4 text-3xl font-bold !leading-tight text-[#FFF2CC] sm:text-4xl md:text-[45px] custom-text-shadow">
               what we offer
             </h2>
-            <h1 className="agbalumo text-base text-body-color md:text-lg p-4">
+            <h1 className="agbalumo text-gray-200 text-body-color md:text-lg p-4">
               "We create a unique connection with your favorite superstar and
               player by providing you with the special items they used in their
               most memorable moments. Own a piece of their history and feel
