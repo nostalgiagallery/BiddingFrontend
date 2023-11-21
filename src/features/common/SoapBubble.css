@@ -259,8 +259,8 @@
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2),
       inset 0px 10px 30px 5px rgba(255, 255, 255, 1);
 
-    width: 50vw; /* Adjust the width to a percentage of the viewport width */
-    height: 50vw; /* Match the height to maintain aspect ratio */
+    width: 30vw; /* Adjust the width to a percentage of the viewport width */
+    height: 30vw; /* Match the height to maintain aspect ratio */
     position: absolute;
     top: 0;
     left: 0;
