@@ -7,6 +7,9 @@ import ResetPassword from "./features/auth/components/ResetPassword";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./features/auth/components/Login";
 import Process from "./pages/Process";
+import ProductPage from "./pages/ProductPage";
+import ProductDetailsPage from "./pages/ProductDetailsPage";
+import Register from "./features/register/components/Register";
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +20,18 @@ function App() {
     {
       path: "/process",
       element: <Process />,
+    },
+    {
+      path: "/Product-page",
+      element: <ProductPage />,
+    },
+    {
+      path: "/Product-details/:id",
+      element: <ProductDetailsPage />,
+    },
+    {
+      path: "/Product-register/:id",
+      element: <Register/>,
     },
     {
       path: "/login",

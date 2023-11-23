@@ -61,3 +61,19 @@
 .custom-text-shadow {
   text-shadow: 2px 2px 8px rgba(35, 151, 209, 0.5);
 }
+
+
+::-webkit-scrollbar {
+  width: 5px; /* Width of the scrollbar */
+  height: 5px; /* Height of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(226, 96, 96, 0.3); /* Color of the thumb */
+  border-radius: 4px; /* Border radius of the thumb */
+}
+
+/* Hide scrollbar track */
+::-webkit-scrollbar-track {
+  display: none;
+}
