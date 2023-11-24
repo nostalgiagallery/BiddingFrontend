@@ -10,6 +10,7 @@ import Process from "./pages/Process";
 import ProductPage from "./pages/ProductPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import Register from "./features/register/components/Register";
+import Bidpage from "./pages/Bidpage";
 
 function App() {
   const router = createBrowserRouter([
@@ -31,7 +32,11 @@ function App() {
     },
     {
       path: "/Product-register/:id",
-      element: <Register/>,
+      element: <Register />,
+    },
+    {
+      path: "/bid-page/:id",
+      element: <Bidpage />,
     },
     {
       path: "/login",

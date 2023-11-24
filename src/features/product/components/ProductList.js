@@ -7,7 +7,7 @@ const products = [
     name: "Basic Tee",
     imageSrc:
       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
+ 
     videoLink:
       "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
     videoPoster:
@@ -15,8 +15,7 @@ const products = [
     imagetwo:
       "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
     baseprice: 50000,
-    color: "Black",
-    Date: "2023-11-22",
+    Date: "2023-11-25",
     Time: "16:59",
     bidExpired: false,
     soldamount: "",
@@ -40,9 +39,9 @@ const products = [
     imageAlt: "Front of men's Basic Tee in black.",
     baseprice: 50000,
     color: "Black",
-    Date: "2023-11-21",
-    Time: "18:59",
-    bidExpired: true,
+    Date: "2023-11-26",
+    Time: "17:59",
+    bidExpired: false,
     soldamount: "",
     category: "entertainment",
     description: "",
@@ -164,7 +163,11 @@ export default function ProductList() {
                   <h3 className="text-lg">{product.name}</h3>
                   {product.bidExpired ? null : (
                     <Link
-                      to="/"
+                      to={
+                        timeLeft[product.id] === "Bid Now"
+                          ? `/bid-page/${product.id}`
+                          : `/Product-details/${product.id}`
+                      }
                       className={`text-lg ${
                         timeLeft[product.id] === "Bid Now"
                           ? " bg-yellow-400 agbalumo hover:bg-yellow-300 text-gray-200 rounded-lg  px-4 py-2 "
@@ -230,7 +233,10 @@ export default function ProductList() {
                         </span>
                         {/* 30% of base price */}
                       </p>
-                      <Link className="relative" to={`/Product-register/${product.id}`}>
+                      <Link
+                        className="relative"
+                        to={`/Product-register/${product.id}`}
+                      >
                         <button className="agbalumo mt-5 bg-yellow-400 text-black  py-2 px-4 rounded">
                           Register to bid
                         </button>
