@@ -5,12 +5,22 @@ import Signup from "./features/auth/components/Signup";
 import ForgotPassword from "./features/auth/components/ForgotPassword";
 import ResetPassword from "./features/auth/components/ResetPassword";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AlertTemplate from "react-alert-template-basic";
 import Login from "./features/auth/components/Login";
 import Process from "./pages/Process";
 import ProductPage from "./pages/ProductPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import Register from "./features/register/components/Register";
 import Bidpage from "./pages/Bidpage";
+import { positions, Provider } from "react-alert";
+
+const options = {
+  timeout: 4000,
+  position: positions.TOP_RIGHT,
+  offset: "20px",
+  // // you can also just use 'scale'
+  // transition: transitions.FADE
+};
 
 function App() {
   const router = createBrowserRouter([
@@ -59,7 +69,9 @@ function App() {
 
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <Provider template={AlertTemplate} {...options}>
+        <RouterProvider router={router} />
+      </Provider>
     </div>
   );
 }

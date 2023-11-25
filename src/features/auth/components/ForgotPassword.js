@@ -1,18 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  mailsentreset,
+  resetPasswordRequestAsync,
+  selectMailSent,
+  selectStatus,
+} from "../authSlice";
 
 const ForgotPassword = () => {
+  const dispatch = useDispatch();
+  const mailsentis = useSelector(selectMailSent);
+  const Status = useSelector(selectStatus);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+
+  useEffect(() => {
+    let timeoutId;
+    if (mailsentis) {
+      timeoutId = setTimeout(() => {
+        dispatch(mailsentreset());
+        reset();
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [dispatch, reset, mailsentis]);
 
   return (
     <>
-      <section className="relative z-10 overflow-hidden pb-16  md:pb-20 lg:pb-28   bg-[#1D2430] h-screen md:h-full">
-        <div className=" ">
+      <section className="relative z-10 overflow-hidden pb-16  md:pb-20 lg:pb-28   bg-[#1D2430] h-screen">
+        <div className="">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
               <div className="mx-auto max-w-[500px] rounded  bg-[#1D2430] px-6 py-10  sm:p-[60px] bg-opacity-10">
@@ -28,7 +53,7 @@ const ForgotPassword = () => {
                   noValidate
                   className="space-y-6"
                   onSubmit={handleSubmit((data) => {
-                    console.log(data);
+                    dispatch(resetPasswordRequestAsync(data));
                   })}
                 >
                   <div className="mb-8">
@@ -54,6 +79,9 @@ const ForgotPassword = () => {
                     {errors.email && (
                       <p className="text-red-500">{errors?.email?.message}</p>
                     )}
+                    {mailsentis && (
+                      <p className="text-green-500">Mail sent successfully</p>
+                    )}
                   </div>
 
                   <div className="mb-6">
@@ -61,7 +89,28 @@ const ForgotPassword = () => {
                       type="submit"
                       className="flex w-full items-center justify-center rounded-sm bg-blue-600	 px-9 py-4  text-white duration-300 hover:bg-blue-500"
                     >
-                      Continue
+                      {Status === "loading" ? (
+                        <svg
+                          class="animate-spin h-5 w-5 mr-3 border-b-1 border-white"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4"
+                          ></circle>
+                          <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.004 8.004 0 0112 4.535V0C5.373 0 0 5.373 0 12h4zm2 5.291h4a8.01 8.01 0 01-7.746-5.332L6 17.583z"
+                          ></path>
+                        </svg>
+                      ) : (
+                        <span> Send Email</span>
+                      )}
                     </button>
                   </div>
                 </form>

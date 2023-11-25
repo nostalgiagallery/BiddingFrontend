@@ -1,8 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectError,
+  selectLoggedinUser,
+  selectStatus,
+  errorhandler,
+  createUserAsync,
+} from "../authSlice";
+import { useAlert } from "react-alert";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const error = useSelector(selectError);
+  const Status = useSelector(selectStatus);
+  const navigate = useNavigate();
+  const user = useSelector(selectLoggedinUser);
+  const alert = useAlert();
+
   const {
     register,
     handleSubmit,
@@ -10,8 +26,23 @@ const Signup = () => {
     reset,
   } = useForm();
 
+  useEffect(() => {
+    let timeoutId;
+    if (error === "Email already in use") {
+      timeoutId = setTimeout(() => {
+        alert.info("Redirect to LogIn");
+        dispatch(errorhandler());
+        navigate("/login", { replace: true });
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [dispatch, error, navigate]);
+
   return (
     <>
+      {user && <Navigate to="/" replace={true}></Navigate>}
       <section className="relative z-10 overflow-scroll pb-16  md:pb-20 lg:pb-28   bg-[#1D2430] h-screen md:h-full">
         <div className=" ">
           <div className="-mx-4 flex flex-wrap">
@@ -27,7 +58,13 @@ const Signup = () => {
                 <form
                   noValidate
                   onSubmit={handleSubmit((data) => {
-                    console.log(data);
+                    dispatch(
+                      createUserAsync({
+                        email: data.email,
+                        password: data.password,
+                        role: "user",
+                      })
+                    );
                   })}
                 >
                   <div className="mb-8">
@@ -105,6 +142,7 @@ const Signup = () => {
                         {errors?.ConfirmPassword.message}
                       </p>
                     )}
+                    {error && <p className="text-red-500">{error}</p>}
                   </div>
                   <div className="mb-8 flex flex-col justify-between sm:flex-row sm:items-center">
                     <div>
@@ -117,8 +155,32 @@ const Signup = () => {
                     </div>
                   </div>
                   <div className="mb-6">
-                    <button type="submit" className="flex w-full items-center justify-center rounded-sm bg-blue-600	 px-9 py-4  text-white duration-300 hover:bg-blue-500">
-                      Sign up
+                    <button
+                      type="submit"
+                      className="flex w-full items-center justify-center rounded-sm bg-blue-600	 px-9 py-4  text-white duration-300 hover:bg-blue-500"
+                    >
+                      {Status === "loading" ? (
+                        <svg
+                          class="animate-spin h-5 w-5 mr-3 border-b-1 border-white"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4"
+                          ></circle>
+                          <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.004 8.004 0 0112 4.535V0C5.373 0 0 5.373 0 12h4zm2 5.291h4a8.01 8.01 0 01-7.746-5.332L6 17.583z"
+                          ></path>
+                        </svg>
+                      ) : (
+                        <span> Sign Up</span>
+                      )}
                     </button>
                   </div>
                 </form>

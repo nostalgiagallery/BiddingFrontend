@@ -1,16 +1,49 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectError,
+  selectLoggedinUser,
+  selectStatus,
+  mailsentreset,
+  errorhandler,
+  loginUserAsync,
+} from "../authSlice";
+import { useAlert } from "react-alert";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const error = useSelector(selectError);
+  const Status = useSelector(selectStatus);
+  const navigate = useNavigate();
+  const user = useSelector(selectLoggedinUser);
+  const alert = useAlert();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    dispatch(mailsentreset());
+    let timeoutId;
+    if (error === "user not found") {
+      timeoutId = setTimeout(() => {
+        alert.info("Redirect to signup");
+        dispatch(errorhandler());
+        navigate("/signup", { replace: true });
+      }, 1000);
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [dispatch, error, navigate]);
+
   return (
     <>
+      {user && <Navigate to="/" replace={true}></Navigate>}
       <section className="relative z-10 overflow-hidden pb-16  md:pb-20 lg:pb-28   bg-[#1D2430] h-screen md:h-full">
         <div className=" ">
           <div className="-mx-4 flex flex-wrap">
@@ -26,7 +59,15 @@ const Login = () => {
                 <form
                   noValidate
                   onSubmit={handleSubmit((data) => {
-                    console.log(data);
+                    dispatch(
+                      loginUserAsync({
+                        loginInfo: {
+                          email: data.email,
+                          password: data.password,
+                        },
+                        alert,
+                      })
+                    );
                   })}
                 >
                   <div className="mb-8">
@@ -80,6 +121,7 @@ const Login = () => {
                     {errors.password && (
                       <p className="text-red-500">{errors?.password.message}</p>
                     )}
+                    {error && <p className="text-red-500">{error}</p>}
                   </div>
                   <div className="mb-8 flex flex-col justify-between sm:flex-row sm:items-center">
                     <div>
@@ -96,7 +138,28 @@ const Login = () => {
                       type="submit"
                       className="flex w-full items-center justify-center rounded-sm bg-blue-600	 px-9 py-4  text-white duration-300 hover:bg-blue-500"
                     >
-                      Sign in
+                      {Status === "loading" ? (
+                        <svg
+                          class="animate-spin h-5 w-5 mr-3 border-b-1 border-white"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4"
+                          ></circle>
+                          <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.004 8.004 0 0112 4.535V0C5.373 0 0 5.373 0 12h4zm2 5.291h4a8.01 8.01 0 01-7.746-5.332L6 17.583z"
+                          ></path>
+                        </svg>
+                      ) : (
+                        <span>Sign in</span>
+                      )}
                     </button>
                   </div>
                 </form>

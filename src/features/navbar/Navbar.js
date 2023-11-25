@@ -2,13 +2,14 @@ import React from "react";
 import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectLoggedinUser } from "../auth/authSlice";
 
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Process", href: "/process", current: false },
   { name: "Product", href: "/Product-page", current: false },
-  { name: "Calendar", href: "#", current: false },
 ];
 
 function classNames(...classes) {
@@ -17,7 +18,9 @@ function classNames(...classes) {
 
 export default function Navbar({ children }) {
   const [isSticky, setIsSticky] = useState(false);
-  const login = false;
+  const user = useSelector(selectLoggedinUser);
+  const location = useLocation();
+  const [currentNavigation, setNavigation] = useState(navigation);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +32,14 @@ export default function Navbar({ children }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const updatedNavigation = currentNavigation.map((item) => ({
+      ...item,
+      current: item.href === location.pathname,
+    }));
+    setNavigation(updatedNavigation);
+  }, [location]);
 
   return (
     <>
@@ -64,10 +75,10 @@ export default function Navbar({ children }) {
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                      {navigation.map((item) => (
-                        <a
+                      {currentNavigation.map((item) => (
+                        <Link
                           key={item.name}
-                          href={item.href}
+                          to={item.href}
                           className={classNames(
                             item.current
                               ? " bg-gray-900 text-white"
@@ -77,12 +88,20 @@ export default function Navbar({ children }) {
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
-                        </a>
+                        </Link>
                       ))}
+                      {user?.role === "admin" && (
+                        <Link
+                          to="/admin-product"
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white agbalumo rounded-md px-3 py-2 text-md font-medium mt-5"
+                        >
+                          Admin Product
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
-                {!login && (
+                {!user && (
                   <div className="absolute inset-y-0 right-0 flex justify-between pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0  px-7 mt-8 md:mt-0">
                     <Link
                       to="/login"
@@ -92,19 +111,10 @@ export default function Navbar({ children }) {
                     </Link>
                   </div>
                 )}
-                {login && (
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 bg-green-400">
-                    <button
-                      type="button"
-                      className="relative rounded-full bg-white p-1 text-black hover:text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-
+                {user && (
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 ">
                     {/* Profile dropdown */}
-                    <Menu as="div" className="relative ml-3 bg-red-400">
+                    <Menu as="div" className="relative ml-3 ">
                       <div>
                         <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                           <span className="absolute -inset-1.5" />
@@ -129,41 +139,41 @@ export default function Navbar({ children }) {
                         <Menu.Items className="absolute right-0  mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#"
+                              <Link
+                                href="/my-profile"
                                 className={classNames(
                                   active ? " bg-gray-100" : "",
                                   " agbalumo block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Your Profile
-                              </a>
+                                My Profile
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#"
+                              <Link
+                                to="/registers"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "agbalumo block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Settings
-                              </a>
+                                My registers
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="#"
+                              <Link
+                                to="/sign-out"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   " agbalumo block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 Sign out
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </Menu.Items>
@@ -176,7 +186,7 @@ export default function Navbar({ children }) {
 
             <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2 ">
-                {navigation.map((item) => (
+                {currentNavigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
                     as="a"
