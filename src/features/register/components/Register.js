@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 const user = {
   email: "jsahu5425@gmail.com",
@@ -22,12 +23,41 @@ const registerUser = {
 };
 
 export default function Register() {
+  const params = useParams();
+  const [url, seturl] = useState("");
+
+  function uploadImage(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    return fetch("http://localhost:8080/uploadFile", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error) {
+          console.error("Upload failed:", data.error);
+        } else {
+          console.log(data.url);
+          seturl(data?.url);
+        }
+      })
+      .catch((error) => console.error("Upload failed:", error));
+  }
+
+  function onChangeFile(e) {
+    const imageData = e.target.files[0];
+    if (imageData) {
+      uploadImage(imageData);
+    }
+  }
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const params = useParams();
 
   return (
     <>
@@ -229,11 +259,38 @@ export default function Register() {
                 )}
               </div>
 
-              <div className="mb-8 w-1/2">
-                <button className="flex w-full items-center justify-center bg-[#2d3139] 	 px-9 py-4  text-white duration-300  rounded-lg text-xl">
-                  Token Price: ₹
-                  <span>{Math.round(product?.baseprice * 0.3)}</span>
-                </button>
+              <div className="flex flex-col md:flex-row justify-between gap-1">
+                <div className="mb-8 w-full md:w-1/2">
+                  <button className="flex w-full items-center justify-center bg-[#2d3139] 	 px-9 py-4  text-white duration-300  rounded-lg text-xl">
+                    Token Price: ₹
+                    <span>{Math.round(product?.baseprice * 0.3)}</span>
+                  </button>
+                </div>
+                <div className="mb-8 w-full md:w-1/2 flex">
+                  <div className="w-full md:w-1/4 h-auto  flex justify-center ">
+                    {url && (
+                      <img
+                        src={url}
+                        alt="profile_image"
+                        className="w-20 h-20 rounded-lg"
+                      />
+                    )}
+                  </div>
+                  <div className="w-full md:w-3/4">
+                    <label
+                      htmlFor="fileInput"
+                      className="flex w-full items-center justify-center bg-[#404f6d] md:px-9 md:py-4 p-2 text-white duration-300 rounded-lg text-xl cursor-pointer"
+                    >
+                      Upload File
+                    </label>
+                    <input
+                      id="fileInput"
+                      type="file"
+                      onChange={onChangeFile}
+                      className="hidden"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="mb-6">
