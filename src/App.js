@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Homepage from "./pages/Homepage";
 import Signup from "./features/auth/components/Signup";
@@ -13,13 +13,17 @@ import ProductDetailsPage from "./pages/ProductDetailsPage";
 import Register from "./features/register/components/Register";
 import Bidpage from "./pages/Bidpage";
 import { positions, Provider } from "react-alert";
+import AdminProductPage from "./pages/AdminProductPage";
+import Protected from "./features/auth/components/Protected";
+import { useDispatch, useSelector } from "react-redux";
+import { checkAuthAsync, selectLoggedinUser } from "./features/auth/authSlice";
+import ProductForm from "./features/admin/Product-form";
+import AdminProductFormPage from "./pages/AdminProductFormPage";
 
 const options = {
   timeout: 4000,
   position: positions.TOP_RIGHT,
   offset: "20px",
-  // // you can also just use 'scale'
-  // transition: transitions.FADE
 };
 
 function App() {
@@ -37,12 +41,28 @@ function App() {
       element: <ProductPage />,
     },
     {
+      path: "/admin-product",
+      element: <AdminProductPage />,
+    },
+    {
+      path: "/product-form",
+      element: <AdminProductFormPage />,
+    },
+    {
+      path: "/product-form/edit/:id",
+      element: <AdminProductFormPage />,
+    },
+    {
       path: "/Product-details/:id",
       element: <ProductDetailsPage />,
     },
     {
       path: "/Product-register/:id",
-      element: <Register />,
+      element: (
+        <Protected>
+          <Register />
+        </Protected>
+      ),
     },
     {
       path: "/bid-page/:id",
@@ -66,6 +86,12 @@ function App() {
       element: <ResetPassword />,
     },
   ]);
+
+  const dispatch = useDispatch();
+  const user = useSelector(selectLoggedinUser);
+  useEffect(() => {
+    dispatch(checkAuthAsync());
+  }, []);
 
   return (
     <div className="App">

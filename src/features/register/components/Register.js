@@ -39,7 +39,6 @@ export default function Register() {
         if (data.error) {
           console.error("Upload failed:", data.error);
         } else {
-          console.log(data.url);
           seturl(data?.url);
         }
       })
@@ -288,6 +287,7 @@ export default function Register() {
                       type="file"
                       onChange={onChangeFile}
                       className="hidden"
+                      accept="image/*"
                     />
                   </div>
                 </div>

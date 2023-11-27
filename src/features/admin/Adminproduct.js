@@ -5,10 +5,11 @@ import {
   fetchAllProductsAsync,
   selectAllProducts,
   selectStatus,
-} from "../productSlice";
+} from "../product/productSlice";
 import { Audio } from "react-loader-spinner";
 
-//   {
+
+
 //     id: 1,
 //     name: "Basic Tee",
 //     imageSrc:
@@ -64,7 +65,7 @@ import { Audio } from "react-loader-spinner";
 //   // Add more products as needed...
 // ];
 
-export default function ProductList() {
+export default function AdminProduct() {
   const [showDetails, setShowDetails] = useState(null);
   const [timeLeft, setTimeLeft] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -74,10 +75,8 @@ export default function ProductList() {
 
   const filteredProducts = products.filter((product) => {
     return (
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.celebrity.celebrityname
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+      product?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product?.celebrity.celebrityname.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
 
@@ -152,6 +151,12 @@ export default function ProductList() {
             Choose Your Favorite Star's{" "}
             <span className="text-indigo-500">Product</span>
           </h2>
+          <Link
+          to={`/Product-form`}
+          className="relative agbalumo mt-5 text-gray-300 bg-indigo-600 hover:bg-indigo-500  py-2 px-4 rounded"
+        >
+          Add Product
+        </Link>
           <input
             type="text"
             placeholder="Search by product name or celebrity name"
@@ -207,6 +212,22 @@ export default function ProductList() {
                       </Link>
                     )}
                   </div>
+
+                  <div className="flex justify-between gap-1 p-2 text-gray-300 text-center py-2 ">
+                  <Link
+                    to={`/product-form/edit/${product.id}`}
+                    className="relative agbalumo mt-5 bg-green-600 hover:bg-green-400  py-2 px-4 rounded"
+                  >
+                    Edit
+                  </Link>
+                  <button className="relative agbalumo mt-5 bg-red-500 hover:bg-red-400  py-2 px-4 rounded">
+                    Delete
+                  </button>
+                </div>
+
+
+
+
 
                   {/* Product details */}
                   <div
