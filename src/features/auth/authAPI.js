@@ -117,26 +117,15 @@ export function resetPassword(password) {
   });
 }
 
-// ////////userapi//////////////
+export function updateUser(user) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("/auth/updteuser/" + user.id, {
+      method: "PATCH",
+      body: JSON.stringify(user),
+      headers: { "content-type": "application/json" },
+    });
 
-// export function fetchLoggedInUserOrders() {
-//   return new Promise(async (resolve) =>{
-//   const response= await fetch('/orders/own');
-//   const data=await response.json();
-//   resolve({data})
-// });
-
-// }
-
-// export function updateUser(update) {
-//   return new Promise(async (resolve) => {
-//     const response = await fetch("/users/"+update.id, {
-//       method: "PATCH",
-//       body: JSON.stringify(update),
-//       headers: { "content-type": "application/json" },
-//     });
-
-//     const data = await response.json();
-//     resolve({ data });
-//   });
-// }
+    const data = await response.json();
+    resolve({ data });
+  });
+}

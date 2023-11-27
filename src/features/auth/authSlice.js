@@ -82,15 +82,15 @@ export const signOutAsync = createAsyncThunk("auth/signOut", async (alert) => {
   return response.data;
 });
 
-// export const updateUserAsync = createAsyncThunk(
-//   "auth/updateUser",
-//   async ({ user, alert }) => {
-//     const response = await updateUser(user);
-//     alert.success("user data updated successfully");
-//     // The value we return becomes the `fulfilled` action payload
-//     return response.data;
-//   }
-// );
+export const updateUserAsync = createAsyncThunk(
+  "auth/updateUser",
+  async ({ user, alert }) => {
+    const response = await updateUser(user);
+    alert.success("user data updated successfully");
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
 
 export const authSlice = createSlice({
   name: "auth",
@@ -118,7 +118,6 @@ export const authSlice = createSlice({
       .addCase(createUserAsync.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.payload.message;
-        
       })
       .addCase(loginUserAsync.pending, (state) => {
         state.status = "loading";
@@ -138,9 +137,6 @@ export const authSlice = createSlice({
       .addCase(signOutAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.LoggedInUser = null;
-      })
-      .addCase(checkAuthAsync.pending, (state) => {
-        state.status = "loading";
       })
       .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = "idle";
@@ -164,6 +160,13 @@ export const authSlice = createSlice({
       .addCase(resetPasswordAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.passwordReset = true;
+      })
+      .addCase(updateUserAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.LoggedInUser = action.payload;
       });
   },
 });

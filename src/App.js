@@ -19,6 +19,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkAuthAsync, selectLoggedinUser } from "./features/auth/authSlice";
 import ProductForm from "./features/admin/Product-form";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
+import ProtectedAdmin from "./features/auth/components/ProtectedAdmin";
+import Logout from "./features/auth/components/Logout";
+import ProfilePage from "./pages/ProfilePage";
 
 const options = {
   timeout: 4000,
@@ -42,15 +45,27 @@ function App() {
     },
     {
       path: "/admin-product",
-      element: <AdminProductPage />,
+      element: (
+        <ProtectedAdmin>
+          <AdminProductPage />
+        </ProtectedAdmin>
+      ),
     },
     {
       path: "/product-form",
-      element: <AdminProductFormPage />,
+      element: (
+        <ProtectedAdmin>
+          <AdminProductFormPage />
+        </ProtectedAdmin>
+      ),
     },
     {
       path: "/product-form/edit/:id",
-      element: <AdminProductFormPage />,
+      element: (
+        <ProtectedAdmin>
+          <AdminProductFormPage />
+        </ProtectedAdmin>
+      ),
     },
     {
       path: "/Product-details/:id",
@@ -66,7 +81,19 @@ function App() {
     },
     {
       path: "/bid-page/:id",
-      element: <Bidpage />,
+      element: (
+        <Protected>
+          <Bidpage />
+        </Protected>
+      ),
+    },
+    {
+      path: "/my-profile",
+      element: (
+        <Protected>
+          <ProfilePage />
+        </Protected>
+      ),
     },
     {
       path: "/login",
@@ -75,6 +102,10 @@ function App() {
     {
       path: "/signup",
       element: <Signup />,
+    },
+    {
+      path: "/logout",
+      element: <Logout />,
     },
 
     {
@@ -88,7 +119,7 @@ function App() {
   ]);
 
   const dispatch = useDispatch();
-  const user = useSelector(selectLoggedinUser);
+
   useEffect(() => {
     dispatch(checkAuthAsync());
   }, []);
