@@ -21,7 +21,7 @@ export default function Navbar({ children }) {
   const user = useSelector(selectLoggedinUser);
   const location = useLocation();
   const [currentNavigation, setNavigation] = useState(navigation);
-
+  
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;

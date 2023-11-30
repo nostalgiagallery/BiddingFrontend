@@ -51,6 +51,8 @@ export function checkAuth() {
       if (response.ok) {
         const data = await response.json();
         resolve({ data });
+      }else{
+        reject(response.error);
       }
     } catch (error) {
       reject(error);

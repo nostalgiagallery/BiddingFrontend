@@ -15,6 +15,7 @@ const initialState = {
   error: null,
   mailSent: false,
   passwordReset: false,
+  authLoading: true,
 };
 
 export const createUserAsync = createAsyncThunk(
@@ -109,7 +110,7 @@ export const authSlice = createSlice({
       .addCase(createUserAsync.pending, (state) => {
         state.status = "loading";
         state.error = null;
-        state.loading = true;
+       
       })
       .addCase(createUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
@@ -138,13 +139,18 @@ export const authSlice = createSlice({
         state.status = "idle";
         state.LoggedInUser = null;
       })
+      .addCase(checkAuthAsync.pending, (state, action) => {
+        state.authLoading = true;
+      })
       .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        state.authLoading = false;
         state.LoggedInUser = action.payload;
       })
       .addCase(checkAuthAsync.rejected, (state, action) => {
         state.status = "rejected";
         state.LoggedInUser = null;
+        state.authLoading = false;
       })
       .addCase(resetPasswordRequestAsync.pending, (state) => {
         state.status = "loading";
@@ -176,6 +182,7 @@ export const selectError = (state) => state.auth.error;
 export const selectStatus = (state) => state.auth.status;
 export const selectMailSent = (state) => state.auth.mailSent;
 export const selectpasswordReset = (state) => state.auth.passwordReset;
+export const selectauthLoading = (state) => state.auth.authLoading;
 
 export const { errorhandler } = authSlice.actions;
 export const { mailsentreset } = authSlice.actions;

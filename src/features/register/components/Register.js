@@ -1,30 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-
-const user = {
-  email: "jsahu5425@gmail.com",
-};
-
-const product = {
-  name: "jsahu5425@gmail.com",
-  baseprice: 50000,
-};
-
-const registerUser = {
-  email: "",
-  name: "",
-  mobile: "",
-  altmobile: "",
-  aadhaara: "",
-  pan: "",
-  profession: "",
-};
+import { selectLoggedinUser, updateUserAsync } from "../../auth/authSlice";
+import { addRegisterAsync } from "../registerSlice";
+import { useAlert } from "react-alert";
+import {
+  fetchProductByIdAsync,
+  selectedProduct,
+} from "../../product/productSlice";
 
 export default function Register() {
   const params = useParams();
-  const [url, seturl] = useState("");
+  const user = useSelector(selectLoggedinUser);
+  const [url, seturl] = useState(user?.profilePic || "");
+  const dispatch = useDispatch();
+  const alert = useAlert();
+  const product = useSelector(selectedProduct);
+  
 
   function uploadImage(file) {
     const formData = new FormData();
@@ -52,6 +45,27 @@ export default function Register() {
     }
   }
 
+  const submitHandler = (data) => {
+    if (url) {
+      dispatch(
+        addRegisterAsync({
+          ...data,
+          profilePic: url,
+          product: product?.id,
+          user: user?.id,
+        })
+      );
+      const newUser = { ...user, profilePic: url, name: data?.name};
+      dispatch(updateUserAsync({ user: newUser, alert }));
+    }else{
+      alert.error("upload a profile image")
+    }
+  };
+
+  useEffect(() => {
+    dispatch(fetchProductByIdAsync(params?.id));
+  }, [dispatch]);
+
   const {
     register,
     handleSubmit,
@@ -64,12 +78,12 @@ export default function Register() {
         <div className="w-full px-4 ">
           <div className="mx-auto max-w-2/3 rounded  bg-[#1D2430] px-6 py-10  sm:p-[60px] bg-opacity-10">
             <h3 className="mb-3 text-center text-2xl font-bold text-white sm:text-3xl">
-              Register for {product.name} #{params.id}
+              Register for {product?.name} #{params.id}
             </h3>
             <form
               noValidate
               onSubmit={handleSubmit((data) => {
-                console.log(data);
+                submitHandler(data);
               })}
               className="text-white"
             >
@@ -92,7 +106,8 @@ export default function Register() {
                   type="email"
                   placeholder="Enter your Email"
                   className="border-stroke w-full rounded-sm border px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary border-transparent bg-[#2C303B] focus:border-indigo-500 focus:shadow-none "
-                  value={user.email}
+                  defaultValue={user.email}
+                  readOnly
                 />
                 {errors.email && (
                   <p className="text-red-500">{errors?.email.message}</p>
@@ -139,7 +154,6 @@ export default function Register() {
                     })}
                     type="tel"
                     placeholder="Enter your Mobile"
-                    defaultValue={registerUser?.mobile}
                     className="border-stroke w-full rounded-sm border px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary border-transparent bg-[#2C303B] focus:border-indigo-500 focus:shadow-none"
                   />
                   {errors.mobile && (
@@ -164,7 +178,6 @@ export default function Register() {
                       },
                     })}
                     type="tel"
-                    defaultValue={registerUser?.altmobile}
                     placeholder="Enter your  Alternate Mobile number"
                     className="border-stroke w-full rounded-sm border px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary border-transparent bg-[#2C303B] focus:border-indigo-500 focus:shadow-none"
                   />
@@ -191,7 +204,6 @@ export default function Register() {
                       },
                     })}
                     type="text"
-                    defaultValue={registerUser?.aadhaara}
                     placeholder="Enter your Aadhaara"
                     className="border-stroke w-full rounded-sm border px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary border-transparent bg-[#2C303B] focus:border-indigo-500 focus:shadow-none"
                   />
@@ -216,7 +228,6 @@ export default function Register() {
                         message: "Please enter a valid PAN card number",
                       },
                     })}
-                    defaultValue={registerUser?.pan}
                     type="text"
                     placeholder="Enter your PAN Card Number"
                     className="border-stroke w-full rounded-sm border px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary border-transparent bg-[#2C303B] focus:border-indigo-500 focus:shadow-none"
@@ -238,7 +249,6 @@ export default function Register() {
                   {...register("profession", {
                     required: "Profession field is required",
                   })}
-                  defaultValue={registerUser?.profession}
                   className="border-stroke w-full rounded-sm border px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary border-transparent bg-[#2C303B] focus:border-indigo-500 focus:shadow-none text-white"
                 >
                   <option value="">Select your profession</option>
@@ -277,13 +287,13 @@ export default function Register() {
                   </div>
                   <div className="w-full md:w-3/4">
                     <label
-                      htmlFor="fileInput"
+                      htmlFor="profilePic"
                       className="flex w-full items-center justify-center bg-[#404f6d] md:px-9 md:py-4 p-2 text-white duration-300 rounded-lg text-xl cursor-pointer"
                     >
-                      Upload File
+                      Upload Profile Image
                     </label>
                     <input
-                      id="fileInput"
+                      id="profilePic"
                       type="file"
                       onChange={onChangeFile}
                       className="hidden"

@@ -63,7 +63,7 @@ const Profile = () => {
 
   useEffect(() => {
     setName(user?.name || "");
-    setSelectedFile(user?.profilePic || null);
+    setSelectedFile(user?.profilePic);
   }, []);
 
   return (
@@ -75,14 +75,14 @@ const Profile = () => {
 
         <div className="grid grid-cols-1 gap-x-10 lg:grid-cols-8 p-10">
           <div className="lg:col-span-4 ">
-            {user?.profilePic && (
+            {selectedFile && (
               <img
-                src={user?.profilePic}
+                src={selectedFile}
                 alt="ProfilePic"
                 className="w-64 h-64 block rounded-full"
               />
             )}
-            {!user?.profilePic && (
+            {!selectedFile && (
               <UserCircleIcon
                 className="w-64 h-64 text-gray-300"
                 aria-hidden="true"

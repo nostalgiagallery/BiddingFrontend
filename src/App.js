@@ -29,100 +29,100 @@ const options = {
   offset: "20px",
 };
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Homepage />,
+  },
+  {
+    path: "/process",
+    element: <Process />,
+  },
+  {
+    path: "/Product-page",
+    element: <ProductPage />,
+  },
+  {
+    path: "/admin-product",
+    element: (
+      <ProtectedAdmin>
+        <AdminProductPage />
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/product-form",
+    element: (
+      <ProtectedAdmin>
+        <AdminProductFormPage />
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/product-form/edit/:id",
+    element: (
+      <ProtectedAdmin>
+        <AdminProductFormPage />
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/Product-details/:id",
+    element: <ProductDetailsPage />,
+  },
+  {
+    path: "/Product-register/:id",
+    element: (
+      <Protected>
+        <Register />
+      </Protected>
+    ),
+  },
+  {
+    path: "/bid-page/:id",
+    element: (
+      <Protected>
+        <Bidpage />
+      </Protected>
+    ),
+  },
+  {
+    path: "/my-profile",
+    element: (
+      <Protected>
+        <ProfilePage />
+      </Protected>
+    ),
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
+  },
+
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
+  },
+]);
+
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Homepage />,
-    },
-    {
-      path: "/process",
-      element: <Process />,
-    },
-    {
-      path: "/Product-page",
-      element: <ProductPage />,
-    },
-    {
-      path: "/admin-product",
-      element: (
-        <ProtectedAdmin>
-          <AdminProductPage />
-        </ProtectedAdmin>
-      ),
-    },
-    {
-      path: "/product-form",
-      element: (
-        <ProtectedAdmin>
-          <AdminProductFormPage />
-        </ProtectedAdmin>
-      ),
-    },
-    {
-      path: "/product-form/edit/:id",
-      element: (
-        <ProtectedAdmin>
-          <AdminProductFormPage />
-        </ProtectedAdmin>
-      ),
-    },
-    {
-      path: "/Product-details/:id",
-      element: <ProductDetailsPage />,
-    },
-    {
-      path: "/Product-register/:id",
-      element: (
-        <Protected>
-          <Register />
-        </Protected>
-      ),
-    },
-    {
-      path: "/bid-page/:id",
-      element: (
-        <Protected>
-          <Bidpage />
-        </Protected>
-      ),
-    },
-    {
-      path: "/my-profile",
-      element: (
-        <Protected>
-          <ProfilePage />
-        </Protected>
-      ),
-    },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/signup",
-      element: <Signup />,
-    },
-    {
-      path: "/logout",
-      element: <Logout />,
-    },
-
-    {
-      path: "/forgot-password",
-      element: <ForgotPassword />,
-    },
-    {
-      path: "/reset-password",
-      element: <ResetPassword />,
-    },
-  ]);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(checkAuthAsync());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">

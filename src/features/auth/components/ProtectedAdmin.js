@@ -1,16 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { selectLoggedinUser, selectStatus } from "../authSlice";
+import { selectLoggedinUser, selectauthLoading } from "../authSlice";
 import { Audio } from "react-loader-spinner";
+import { useAlert } from "react-alert";
 
 const ProtectedAdmin = ({ children }) => {
-  const Status = useSelector(selectStatus);
+  const Status = useSelector(selectauthLoading);
   const user = useSelector(selectLoggedinUser);
+  const alert = useAlert();
 
-  if (Status === "loading") {
+  if (Status) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen bg-[#1D2430]">
         <Audio
           height={100}
           width={100}
@@ -25,12 +27,12 @@ const ProtectedAdmin = ({ children }) => {
     );
   }
 
-  if (!user) {
-    return <Navigate to="/"></Navigate>;
+  if (!user && !Status) {
+    return <Navigate to="/">{alert.error("You need to log in!")}</Navigate>;
   }
 
-  if (user && user.role !== "admin") {
-    return <Navigate to="/"></Navigate>;
+  if (user && user.role !== "admin" && !Status) {
+    return <Navigate to="/">{alert.error("You need to log in!")}</Navigate>;
   }
 
   return children;

@@ -14,6 +14,7 @@ import {
 const ProductForm = () => {
   const dispatch = useDispatch();
   const [thumbnailurl, Setthumbnailurl] = useState(null);
+  const [imagepng, Settimagepng] = useState(null);
   const [imagetwo, setImagetwo] = useState(null);
   const [video, setvideo] = useState(null);
   const [videoposter, setvideoposter] = useState(null);
@@ -65,6 +66,13 @@ const ProductForm = () => {
     }
   };
 
+  const onChangeImagePng = (e) => {
+    const imageData = e.target.files[0];
+    if (imageData) {
+      uploadImage(imageData, Settimagepng);
+    }
+  };
+
   const onChangeProducttwo = (e) => {
     const imageData = e.target.files[0];
     if (imageData) {
@@ -112,6 +120,7 @@ const ProductForm = () => {
       setvideoposter(selectedProductIS.videoposter);
       Setthumbnailurl(selectedProductIS.imagesrc);
       setImagetwo(selectedProductIS.imagetwo);
+      Settimagepng(selectedProductIS.imagepng);
     }
   }, [selectedProductIS, params.id, setValue]);
 
@@ -119,7 +128,14 @@ const ProductForm = () => {
     <form
       className="relative bg-gray-200 p-6 rounded-md text-gray-200"
       onSubmit={handleSubmit((data) => {
-        if (thumbnailurl && imagetwo && video && videoposter && avatar) {
+        if (
+          thumbnailurl &&
+          imagetwo &&
+          video &&
+          videoposter &&
+          avatar &&
+          imagepng
+        ) {
           const product = { ...data };
           product.baseprice = +product.baseprice;
           product.imagesrc = thumbnailurl;
@@ -127,6 +143,7 @@ const ProductForm = () => {
           product.videolink = video;
           product.videoposter = videoposter;
           product.videoposter = videoposter;
+          product.imagepng = imagepng;
           product.celebrity = {
             celebrityname: product.celebrityname,
             wikipedia: product.wikipedia,
@@ -306,6 +323,33 @@ const ProductForm = () => {
                   />
                 </div>
               </div>
+            </div>
+
+            <div className="sm:col-span-2">
+            <div className="mt-7">
+              <label
+                htmlFor="imagepng"
+                className="flex w-full items-center justify-center bg-green-400 p-2 text-white duration-300 rounded-lg  cursor-pointer"
+              >
+                Upload Product Png
+              </label>
+              <input
+                id="imagepng"
+                type="file"
+                onChange={onChangeImagePng}
+                className="hidden"
+                accept="image/*"
+              />
+              </div>
+            </div>
+            <div>
+              {imagepng && (
+                <img
+                  src={imagepng}
+                  alt="profile_image"
+                  className="w-20 h-20 rounded-lg"
+                />
+              )}
             </div>
 
             <div className="col-span-full">

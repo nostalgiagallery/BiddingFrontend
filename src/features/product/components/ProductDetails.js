@@ -43,7 +43,6 @@ const ProductDetails = () => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-
   }, [product]);
 
   useEffect(() => {
@@ -147,7 +146,7 @@ const ProductDetails = () => {
                       </span>
                     </p>
                     {product.bidExpired ? null : (
-                      <Link to="/">
+                      <Link to={`/bid-page/${product.id}`}>
                         <button
                           className={`${
                             timeLeft[product.id] === "Participate now"
