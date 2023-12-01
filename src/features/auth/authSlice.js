@@ -104,13 +104,15 @@ export const authSlice = createSlice({
     mailsentreset: (state) => {
       state.mailSent = false;
     },
+    passwordstatusreset: (state) => {
+      state.passwordReset = false;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(createUserAsync.pending, (state) => {
         state.status = "loading";
         state.error = null;
-       
       })
       .addCase(createUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
@@ -186,6 +188,7 @@ export const selectauthLoading = (state) => state.auth.authLoading;
 
 export const { errorhandler } = authSlice.actions;
 export const { mailsentreset } = authSlice.actions;
+export const { passwordstatusreset } = authSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`

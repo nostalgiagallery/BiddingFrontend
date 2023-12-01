@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  passwordstatusreset,
   resetPasswordAsync,
   selectStatus,
   selectpasswordReset,
@@ -17,11 +18,25 @@ const ResetPassword = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const query = new URLSearchParams(window.location.search);
   const token = query.get("token");
   const email = query.get("email");
+
+  useEffect(() => {
+    let timeoutId;
+    if (passwordReset) {
+      timeoutId = setTimeout(() => {
+        dispatch(passwordstatusreset());
+        reset();
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [dispatch, reset, passwordReset]);
 
   return (
     <>
@@ -100,6 +115,11 @@ const ResetPassword = () => {
                         placeholder="Enter your Password"
                         className="border-stroke w-full rounded-sm border px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary border-transparent bg-[#2C303B] focus:border-indigo-500 focus:shadow-none text-white"
                       />
+                      {passwordReset && (
+                        <p className="text-green-500">
+                          Password Change successfully
+                        </p>
+                      )}
                     </div>
 
                     <div className="mb-6">

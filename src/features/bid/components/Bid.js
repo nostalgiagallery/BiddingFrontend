@@ -103,7 +103,7 @@ export default function Bid() {
 
   useEffect(() => {
     dispatch(findRegisterAsync({ userId: user?.id, productId: product?.id }));
-  }, [dispatch]);
+  }, [dispatch,user,product]);
 
   const [timeRemaining, setTimeRemaining] = useState("");
 
