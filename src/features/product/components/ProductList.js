@@ -8,62 +8,6 @@ import {
 } from "../productSlice";
 import { Audio } from "react-loader-spinner";
 
-//   {
-//     id: 1,
-//     name: "Basic Tee",
-//     imageSrc:
-//       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-
-//     videoLink:
-//       "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
-//     videoPoster:
-//       "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ebf67c121285927.60d78237c4bbd.jpg",
-//     imagetwo:
-//       "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
-//     baseprice: 50000,
-//     Date: "2023-11-25",
-//     Time: "16:59",
-//     bidExpired: false,
-//     soldamount: "",
-//     category: "entertainment",
-//     description:
-//       "Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.",
-//     celebrity: {
-//       id: 1,
-//       name: "carry minati",
-//       wikipedia: "https://en.wikipedia.org/wiki/CarryMinati",
-//       role: "youtuber",
-//       avatar:
-//         "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     },
-//   },
-//   {
-//     id: 2,
-//     name: "Basic Tee",
-//     imageSrc:
-//       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-//     imageAlt: "Front of men's Basic Tee in black.",
-//     baseprice: 50000,
-//     color: "Black",
-//     Date: "2023-11-26",
-//     Time: "17:59",
-//     bidExpired: false,
-//     soldamount: "",
-//     category: "entertainment",
-//     description: "",
-//     celebrity: {
-//       id: 1,
-//       name: "Jitu",
-//       href: "https://en.wikipedia.org/wiki/CarryMinati",
-//       role: "youtuber",
-//       avatar:
-//         "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     },
-//   },
-
-//   // Add more products as needed...
-// ];
-
 export default function ProductList() {
   const [showDetails, setShowDetails] = useState(null);
   const [timeLeft, setTimeLeft] = useState({});
@@ -119,12 +63,9 @@ export default function ProductList() {
     };
   }, [products]);
 
-  const toggleDetails = (id) => {
-    if (showDetails === id) {
-      setShowDetails(null);
-    } else {
-      setShowDetails(id);
-    }
+  const toggleDetails = (event, id) => {
+    event.preventDefault();
+    setShowDetails((prevId) => (prevId === id ? null : id));
   };
 
   useEffect(() => {
@@ -171,7 +112,6 @@ export default function ProductList() {
                   to={`/Product-details/${product.id}`}
                   key={product.id}
                   className="relative bg-[#313844] rounded-lg overflow-hidden border-1 border-indigo-500 "
-                  onClick={() => toggleDetails(product.id)}
                   onMouseEnter={() =>
                     window.innerWidth >= 768 && setShowDetails(product.id)
                   }
@@ -206,6 +146,24 @@ export default function ProductList() {
                         {timeLeft[product.id]}
                       </Link>
                     )}
+                  </div>
+
+                  <div className="relative md:hidden flex justify-between gap-1 p-2 text-gray-300 text-center py-2 ">
+                    <button
+                      onClick={(event) => toggleDetails(event, product.id)}
+                      className="relative agbalumo mt-5 bg-indigo-500 hover:bg-indigo-400  py-2 px-4 rounded"
+                    >
+                      Details
+                    </button>
+                  </div>
+
+                  <div className=" flex justify-between gap-1 p-2 text-gray-300 text-center py-2 ">
+                    <div className="relative agbalumo mt-5 bg-[#262a32]  py-2 px-4 rounded">
+                      {product.Date}
+                    </div>
+                    <div className="relative agbalumo mt-5 bg-[#262a32]  py-2 px-4 rounded">
+                      {product.Time}
+                    </div>
                   </div>
 
                   {/* Product details */}
@@ -273,6 +231,17 @@ export default function ProductList() {
                           </button>
                         </Link>
                       </div>
+                    </div>
+                    <div className="relative md:hidden flex justify-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width={25}
+                        height={25}
+                        onClick={(event) => toggleDetails(event, product.id)}
+                      >
+                        <path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59 5.59-5.59z" />
+                      </svg>
                     </div>
                   </div>
                 </Link>

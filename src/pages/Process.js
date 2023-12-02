@@ -9,7 +9,7 @@ const Process = () => {
   return (
     <>
       <Navbar>
-      <SoapBubbleBackground></SoapBubbleBackground>
+      <SoapBubbleBackground className="hidden md:block"></SoapBubbleBackground>
         <StepperContent/>
         <section className="max-w-full overflow-hidden relative z-[-1] py-10  bg-[#1D2430] ">
           <div className="">

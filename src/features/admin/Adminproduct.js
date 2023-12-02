@@ -9,62 +9,6 @@ import {
 import { Audio } from "react-loader-spinner";
 
 
-
-//     id: 1,
-//     name: "Basic Tee",
-//     imageSrc:
-//       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-
-//     videoLink:
-//       "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
-//     videoPoster:
-//       "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ebf67c121285927.60d78237c4bbd.jpg",
-//     imagetwo:
-//       "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
-//     baseprice: 50000,
-//     Date: "2023-11-25",
-//     Time: "16:59",
-//     bidExpired: false,
-//     soldamount: "",
-//     category: "entertainment",
-//     description:
-//       "Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean shorts keytar banjo tattooed umami cardigan.",
-//     celebrity: {
-//       id: 1,
-//       name: "carry minati",
-//       wikipedia: "https://en.wikipedia.org/wiki/CarryMinati",
-//       role: "youtuber",
-//       avatar:
-//         "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     },
-//   },
-//   {
-//     id: 2,
-//     name: "Basic Tee",
-//     imageSrc:
-//       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-//     imageAlt: "Front of men's Basic Tee in black.",
-//     baseprice: 50000,
-//     color: "Black",
-//     Date: "2023-11-26",
-//     Time: "17:59",
-//     bidExpired: false,
-//     soldamount: "",
-//     category: "entertainment",
-//     description: "",
-//     celebrity: {
-//       id: 1,
-//       name: "Jitu",
-//       href: "https://en.wikipedia.org/wiki/CarryMinati",
-//       role: "youtuber",
-//       avatar:
-//         "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     },
-//   },
-
-//   // Add more products as needed...
-// ];
-
 export default function AdminProduct() {
   const [showDetails, setShowDetails] = useState(null);
   const [timeLeft, setTimeLeft] = useState({});

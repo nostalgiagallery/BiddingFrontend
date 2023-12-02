@@ -1,9 +1,12 @@
 import React from "react";
 import "./SoapBubble.css";
 
-const SoapBubbleBackground = () => {
+const SoapBubbleBackground = (props) => {
+  const { className, additionalClass } = props;
+  const combinedClass = `${className} ${additionalClass}`;
+
   return (
-    <div className=" bob ">
+    <div className={`bob ${combinedClass}`}>
       <div className="bubble x1"></div>
       <div className="bubble x2"></div>
       <div className="bubble x3"></div>

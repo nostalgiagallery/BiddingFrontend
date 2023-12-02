@@ -21,7 +21,7 @@ import { useAlert } from "react-alert";
 import { Audio } from "react-loader-spinner";
 
 let socket;
-const ENDPOINT = "http://localhost:8080/";
+const ENDPOINT = "https://bidingapp-82e91ea57bc8.herokuapp.com/";
 
 export default function Bid() {
   const params = useParams();
@@ -67,6 +67,10 @@ export default function Bid() {
   }, [TopBidders, product]);
 
   useEffect(() => {
+    setTopBidders(topRegisters);
+  }, [topRegisters]);
+
+  useEffect(() => {
     socket = socketIO(ENDPOINT, { transports: ["websocket"] });
 
     socket.on("connect", () => {
@@ -103,7 +107,7 @@ export default function Bid() {
 
   useEffect(() => {
     dispatch(findRegisterAsync({ userId: user?.id, productId: product?.id }));
-  }, [dispatch,user,product]);
+  }, [dispatch, user, product]);
 
   const [timeRemaining, setTimeRemaining] = useState("");
 
@@ -170,7 +174,7 @@ export default function Bid() {
           </div>
         ) : (
           <>
-            <div className=" flex justify-center">
+            <div className=" flex flex-col md:flex-row justify-center">
               {timeRemaining && (
                 <div className="agbalumo text-4xl text-red-600 p-3">
                   Bid will end in: {timeRemaining}
@@ -247,27 +251,31 @@ export default function Bid() {
                       Bid Ended
                     </h2>
                   ) : (
-                    <div className="w-full flex p-2 gap-2">
+                    <>
                       {register?.paymentstatus === "success" && (
                         <>
-                          <input
-                            className="agbalumo mt-1 h-12 w-5/6 bg-[#303948] rounded-lg focus:outline-none focus:border-2 focus:border-indigo-500 text-lg text-gray-300 p-1"
-                            id="bid"
-                            type="number"
-                            onChange={bidchangerHandler}
-                          />
+                          <div className="w-full flex p-2 gap-2">
+                            <input
+                              className="agbalumo mt-1 h-12 w-5/6 bg-[#303948] rounded-lg focus:outline-none focus:border-2 focus:border-indigo-500 text-lg text-gray-300 p-1"
+                              id="bid"
+                              type="number"
+                              onChange={bidchangerHandler}
+                            />
 
-                          <button
-                            onClick={send}
-                            className="agbalumo button w-1/6 bg-[#303948] rounded-lg mt-1 hover:bg-[#4969a2] text-gray-300"
-                          >
-                            Bid
-                          </button>
-                          {error && (
-                            <p className="text-red-400  text-md">
-                              Please enter a value greater than {minBidPrice}.
-                            </p>
-                          )}
+                            <button
+                              onClick={send}
+                              className="agbalumo button w-1/6 bg-[#303948] rounded-lg mt-1 hover:bg-[#4969a2] text-gray-300"
+                            >
+                              Bid
+                            </button>
+                          </div>
+                          <div className="w-full flex p-2 gap-2">
+                            {error && (
+                              <p className="text-red-400  text-md">
+                                Please enter a value greater than {minBidPrice}.
+                              </p>
+                            )}
+                          </div>
                         </>
                       )}
                       {register?.paymentstatus !== "success" && (
@@ -275,7 +283,7 @@ export default function Bid() {
                           Register Now
                         </Link>
                       )}
-                    </div>
+                    </>
                   )}
                 </div>
               </div>

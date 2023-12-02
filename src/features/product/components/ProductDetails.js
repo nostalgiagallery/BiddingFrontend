@@ -121,6 +121,15 @@ const ProductDetails = () => {
                   {product.description}
                 </p>
 
+                <div className=" flex justify-evenly gap-1 p-2 text-gray-300 text-center py-2 ">
+                    <div className="relative agbalumo mt-5 bg-[#262a32]  py-2 px-6 rounded">
+                      {product.Date}
+                    </div>
+                    <div className="relative agbalumo mt-5 bg-[#262a32]  py-2 px-6 rounded">
+                      {product.Time}
+                    </div>
+                  </div>
+
                 <div className="flex mt-5 justify-evenly">
                   <div className="flex flex-col justify-evenly">
                     <p className="text-indigo-500 mt-2 md:text-xl ">
@@ -133,7 +142,7 @@ const ProductDetails = () => {
                       className="relative"
                       to={`/Product-register/${product.id}`}
                     >
-                      <button className="mt-1 bg-indigo-500 text-white  py-2 px-4 rounded">
+                      <button className="agbalumo mt-1 bg-indigo-500 text-white  py-2 px-4 rounded">
                         Register to bid
                       </button>
                     </Link>
@@ -150,7 +159,7 @@ const ProductDetails = () => {
                         <button
                           className={`${
                             timeLeft[product.id] === "Participate now"
-                              ? "mt-1 bg-yellow-500 text-white  py-2 px-4 rounded "
+                              ? "agbalumo mt-1 bg-yellow-500 text-white  py-2 px-4 rounded "
                               : "text-red-500 text-2xl md:text-4xl"
                           }`}
                         >

@@ -15,13 +15,14 @@ import Bidpage from "./pages/Bidpage";
 import { positions, Provider } from "react-alert";
 import AdminProductPage from "./pages/AdminProductPage";
 import Protected from "./features/auth/components/Protected";
-import { useDispatch, useSelector } from "react-redux";
-import { checkAuthAsync, selectLoggedinUser } from "./features/auth/authSlice";
-import ProductForm from "./features/admin/Product-form";
+import { useDispatch } from "react-redux";
+import { checkAuthAsync } from "./features/auth/authSlice";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import ProtectedAdmin from "./features/auth/components/ProtectedAdmin";
 import Logout from "./features/auth/components/Logout";
 import ProfilePage from "./pages/ProfilePage";
+import StripeCheckout from "./pages/StripeCheckout";
+import PageNotFound from "./pages/404";
 
 const options = {
   timeout: 4000,
@@ -79,6 +80,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/stripe-checkout/:id",
+    element: (
+      <Protected>
+        <StripeCheckout />
+      </Protected>
+    ),
+  },
+  {
     path: "/bid-page/:id",
     element: (
       <Protected>
@@ -114,6 +123,10 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
   },
 ]);
 

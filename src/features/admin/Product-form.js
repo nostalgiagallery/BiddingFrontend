@@ -21,7 +21,14 @@ const ProductForm = () => {
   const [avatar, setavatar] = useState(null);
   const alert = useAlert();
   const selectedProductIS = useSelector(selectedProduct);
-
+  const [loading, setLoading] = useState({
+    thumbnailLoading: false,
+    imagePngLoading: false,
+    productTwoLoading: false,
+    productVideoLoading: false,
+    videoPosterLoading: false,
+    avatarLoading: false,
+  });
   const params = useParams();
 
   const {
@@ -40,63 +47,70 @@ const ProductForm = () => {
     }
   }, [params.id, dispatch, setValue]);
 
-  function uploadImage(file, setUrl) {
+  function uploadImage(file, setUrl, type) {
     const formData = new FormData();
     formData.append("file", file);
+    setLoading((prevLoading) => ({ ...prevLoading, [type]: true }));
 
-    return fetch("http://localhost:8080/uploadFile", {
+    return fetch("https://bidingapp-82e91ea57bc8.herokuapp.com/uploadFile", {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
+        setLoading((prevLoading) => ({ ...prevLoading, [type]: false }));
         if (data.error) {
-          console.error("Upload failed:", data.error);
+          alert.error(`uploading error in ${type}`);
+          console.error("Upload failed:");
         } else {
           setUrl(data?.url);
         }
       })
-      .catch((error) => console.error("Upload failed:", error));
+      .catch((error) => {
+        setLoading((prevLoading) => ({ ...prevLoading, [type]: false }));
+        console.error("Upload failed:", error);
+        alert.error(`uploading error in ${type}`);
+      });
   }
 
   const onChangeThumbnail = (e) => {
     const imageData = e.target.files[0];
     if (imageData) {
-      uploadImage(imageData, Setthumbnailurl);
+      uploadImage(imageData, Setthumbnailurl, "thumbnailLoading");
     }
   };
 
   const onChangeImagePng = (e) => {
     const imageData = e.target.files[0];
     if (imageData) {
-      uploadImage(imageData, Settimagepng);
+      uploadImage(imageData, Settimagepng, "imagePngLoading");
     }
   };
 
   const onChangeProducttwo = (e) => {
     const imageData = e.target.files[0];
     if (imageData) {
-      uploadImage(imageData, setImagetwo);
+      uploadImage(imageData, setImagetwo, "productTwoLoading");
     }
   };
 
   const onChangeProductVideo = (e) => {
     const VideoData = e.target.files[0];
     if (VideoData) {
-      uploadImage(VideoData, setvideo);
+      uploadImage(VideoData, setvideo, "productVideoLoading");
     }
   };
   const onChangeVideoPoster = (e) => {
     const imageData = e.target.files[0];
     if (imageData) {
-      uploadImage(imageData, setvideoposter);
+      uploadImage(imageData, setvideoposter, "videoPosterLoading");
     }
   };
 
   const onChangeavatar = (e) => {
     const imageData = e.target.files[0];
     if (imageData) {
-      uploadImage(imageData, setavatar);
+      uploadImage(imageData, setavatar, "avatarLoading");
     }
   };
 
@@ -200,7 +214,11 @@ const ProductForm = () => {
                 htmlFor="thumbnail"
                 className="flex w-full items-center justify-center bg-green-400 p-2 text-white duration-300 rounded-lg  cursor-pointer"
               >
-                Upload Thumbnail
+                {loading.thumbnailLoading ? (
+                  <p>Uploading..</p>
+                ) : (
+                  <p>Upload Thumbnail</p>
+                )}
               </label>
               <input
                 id="thumbnail"
@@ -224,8 +242,13 @@ const ProductForm = () => {
                 htmlFor="productimage"
                 className="flex w-full items-center justify-center bg-green-400 p-2 text-white duration-300 rounded-lg  cursor-pointer"
               >
-                Upload Product Image
+                {loading.productTwoLoading ? (
+                  <p>Uploading..</p>
+                ) : (
+                  <p>Upload Product Image</p>
+                )}
               </label>
+
               <input
                 id="productimage"
                 type="file"
@@ -326,20 +349,25 @@ const ProductForm = () => {
             </div>
 
             <div className="sm:col-span-2">
-            <div className="mt-7">
-              <label
-                htmlFor="imagepng"
-                className="flex w-full items-center justify-center bg-green-400 p-2 text-white duration-300 rounded-lg  cursor-pointer"
-              >
-                Upload Product Png
-              </label>
-              <input
-                id="imagepng"
-                type="file"
-                onChange={onChangeImagePng}
-                className="hidden"
-                accept="image/*"
-              />
+              <div className="mt-7">
+                <label
+                  htmlFor="imagepng"
+                  className="flex w-full items-center justify-center bg-green-400 p-2 text-white duration-300 rounded-lg  cursor-pointer"
+                >
+                  {" "}
+                  {loading.imagePngLoading ? (
+                    <p>Uploading..</p>
+                  ) : (
+                    <p> Upload Product Png</p>
+                  )}
+                </label>
+                <input
+                  id="imagepng"
+                  type="file"
+                  onChange={onChangeImagePng}
+                  className="hidden"
+                  accept="image/*"
+                />
               </div>
             </div>
             <div>
@@ -380,7 +408,11 @@ const ProductForm = () => {
                 htmlFor="productVideo"
                 className="flex w-full items-center justify-center bg-green-400 p-2 text-white duration-300 rounded-lg  cursor-pointer"
               >
-                Upload Product Video
+                {loading.productVideoLoading ? (
+                  <p>Uploading..</p>
+                ) : (
+                  <p>Upload Product Video</p>
+                )}
               </label>
               <input
                 id="productVideo"
@@ -405,7 +437,11 @@ const ProductForm = () => {
                 htmlFor="videoposter"
                 className="flex w-full items-center justify-center bg-green-400 p-2 text-white duration-300 rounded-lg  cursor-pointer"
               >
-                Upload video Thumbnail
+                {loading.videoPosterLoading ? (
+                  <p>Uploading..</p>
+                ) : (
+                  <p>Upload video Thumbnail</p>
+                )}
               </label>
               <input
                 id="videoposter"
@@ -560,7 +596,11 @@ const ProductForm = () => {
                 htmlFor="avatar"
                 className="flex w-full items-center justify-center bg-green-400 p-2 text-white duration-300 rounded-lg  cursor-pointer"
               >
-                Upload celebrity avatar
+                {loading.avatarLoading ? (
+                  <p>Uploading..</p>
+                ) : (
+                  <p> Upload celebrity avatar</p>
+                )}
               </label>
               <input
                 id="avatar"
