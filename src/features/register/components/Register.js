@@ -134,7 +134,7 @@ export default function Register() {
                   />
 
                   <h3 className="agbalumo mb-3  text-xl  text-shadow text-[#40e940] sm:text-3xl">
-                    Already Registered
+                    Registered successfully
                   </h3>
                 </div>
               )}
@@ -387,12 +387,9 @@ export default function Register() {
 
                 <div className="mb-6">
                   {registeris?.paymentstatus === "success" ? (
-                    <Link
-                      to={`/bid-page/${product?.id}`}
-                      className="relative flex w-1/2 items-center justify-center rounded-sm bg-yellow-500	 px-9 py-4 text-xl text-gray-200 duration-300 hover:bg-yellow-300"
-                    >
-                      Bid Now
-                    </Link>
+                    <div className="flex w-full items-center justify-center rounded-sm bg-blue-600	 px-9 py-4  text-white duration-300 hover:bg-blue-500">
+                      Registered successfully
+                    </div>
                   ) : (
                     <button
                       type="submit"
