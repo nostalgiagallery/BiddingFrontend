@@ -52,7 +52,7 @@ const ProductForm = () => {
     formData.append("file", file);
     setLoading((prevLoading) => ({ ...prevLoading, [type]: true }));
 
-    return fetch("https://bidingapp-82e91ea57bc8.herokuapp.com/uploadFile", {
+    return fetch("https://biddingapp-5c495b9e8cc1.herokuapp.com/uploadFile", {
       method: "POST",
       body: formData,
     })

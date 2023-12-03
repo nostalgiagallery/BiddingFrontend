@@ -121,36 +121,77 @@ const ProductDetails = () => {
                   {product.description}
                 </p>
 
-                <div className=" flex justify-evenly gap-1 p-2 text-gray-300 text-center py-2 ">
-                    <div className="relative agbalumo mt-5 bg-[#262a32]  py-2 px-6 rounded">
-                      {product.Date}
-                    </div>
-                    <div className="relative agbalumo mt-5 bg-[#262a32]  py-2 px-6 rounded">
-                      {product.Time}
+                <div className="flex justify-between items-center p-4 bg-transparent  ">
+                  <div className="flex items-center shadow-lg p-3 rounded-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-8 w-8 text-indigo-600 mr-3"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {/* Custom calendar icon */}
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                      <line x1="16" y1="2" x2="16" y2="6" />
+                      <line x1="8" y1="2" x2="8" y2="6" />
+                      <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <div>
+                      <p className="text-lg font-bold text-indigo-800">
+                        {product.Date}
+                      </p>
                     </div>
                   </div>
+                  <div className="flex items-center shadow-lg p-3 rounded-lg">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-8 w-8 text-red-600 mr-3"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {/* Updated clearer clock icon */}
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="6" x2="12" y2="12" />
+                      <line x1="12" y1="12" x2="15" y2="15" />
+                    </svg>
+                    <div>
+                      <p className="text-lg font-bold text-red-800">
+                        {product.Time}
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-                <div className="flex mt-5 justify-evenly">
-                  <div className="flex flex-col justify-evenly">
-                    <p className="text-indigo-500 mt-2 md:text-xl ">
+                <div className="flex mt-5 justify-between">
+                  <div className="flex flex-col justify-between gap-2">
+                    <p className="text-lg font-bold text-indigo-400">
                       Min Bid Price: ₹{product.baseprice}
-                      <span className="block ml-1 text-red-500 ">
+                      <span className="block ml-1 text-red-500 text-sm">
                         (Can't bid less than this){" "}
                       </span>
                     </p>
-                    <Link
-                      className="relative"
-                      to={`/Product-register/${product.id}`}
-                    >
-                      <button className="agbalumo mt-1 bg-indigo-500 text-white  py-2 px-4 rounded">
-                        Register to bid
-                      </button>
-                    </Link>
+                    {!product?.bidExpired && (
+                      <Link
+                        className="relative"
+                        to={`/Product-register/${product.id}`}
+                      >
+                        <button className="agbalumo mt-1 bg-indigo-400 text-white py-3 px-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                          Register to Bid
+                        </button>
+                      </Link>
+                    )}
                   </div>
-                  <div className="flex flex-col justify-evenly">
-                    <p className="text-yellow-500 mt-2 md:text-xl">
+                  <div className="flex flex-col justify-between gap-2">
+                    <p className="text-lg font-bold text-yellow-400 ">
                       Token Price: ₹{Math.round(product.baseprice * 0.3)}
-                      <span className="block ml-1 text-red-500">
+                      <span className="block ml-1 text-sm text-red-500">
                         (for Participate in the bid){" "}
                       </span>
                     </p>
@@ -159,11 +200,18 @@ const ProductDetails = () => {
                         <button
                           className={`${
                             timeLeft[product.id] === "Participate now"
-                              ? "agbalumo mt-1 bg-yellow-500 text-white  py-2 px-4 rounded "
+                              ? "agbalumo mt-1 bg-yellow-400 text-white py-3 px-6 rounded-lg shadow-md hover:shadow-xl transition duration-300"
                               : "text-red-500 text-2xl md:text-4xl"
                           }`}
                         >
                           {timeLeft[product.id]}
+                        </button>
+                      </Link>
+                    )}
+                    {product.bidExpired && (
+                      <Link to={`/bid-page/${product.id}`}>
+                        <button className="agbalumo mt-1 bg-yellow-400 text-white py-3 px-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
+                          Bid Result
                         </button>
                       </Link>
                     )}

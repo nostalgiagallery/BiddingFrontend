@@ -40,7 +40,7 @@ export default function Register() {
     formData.append("file", file);
     setLoading((prevLoading) => ({ ...prevLoading, [type]: true }));
 
-    return fetch("https://bidingapp-82e91ea57bc8.herokuapp.com/uploadFile", {
+    return fetch("https://biddingapp-5c495b9e8cc1.herokuapp.com/uploadFile", {
       method: "POST",
       body: formData,
     })
@@ -86,12 +86,9 @@ export default function Register() {
   };
 
   useEffect(() => {
-    dispatch(findRegisterAsync({ userId: user?.id, productId: params?.id }));
-  }, [dispatch, user, product]);
-
-  useEffect(() => {
     dispatch(fetchProductByIdAsync(params?.id));
-  }, [dispatch]);
+    dispatch(findRegisterAsync({ userId: user?.id, productId: params?.id }));
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (registeris && params.id) {
@@ -112,7 +109,7 @@ export default function Register() {
         ></Navigate>
       )}
       {Registersstatus === "loading" ? (
-        <div className="flex items-center justify-center h-screen bg-transparent">
+        <div className="flex items-center justify-center h-screen bg-[#1D2430]">
           <Audio
             height={100}
             width={100}
@@ -125,9 +122,35 @@ export default function Register() {
           />
         </div>
       ) : (
-        <section className="relative z-10 overflow-y-scroll pb-16  md:pb-20 lg:pb-28   bg-[#1D2430] h-screen md:h-full">
+        <section className="  relative z-10 overflow-y-scroll pb-16  md:pb-20 lg:pb-28   bg-[#1D2430] h-screen md:h-full">
           <div className="w-full px-4 ">
             <div className="mx-auto max-w-2/3 rounded  bg-[#1D2430] px-6 py-10  sm:p-[60px] bg-opacity-10">
+              {registeris?.paymentstatus === "success" && (
+                <div className="p-3 flex gap-5 justify-center items-center">
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/checkmark-cross/success-green-check-mark-icon.png"
+                    alt="success"
+                    className="w-20 h-20"
+                  />
+
+                  <h3 className="agbalumo mb-3  text-xl  text-shadow text-[#40e940] sm:text-3xl">
+                    Already Registered
+                  </h3>
+                </div>
+              )}
+              {registeris?.paymentstatus === "pending" && (
+                <div className="p-3 flex gap-5 justify-center items-center">
+                  <img
+                    src="https://static-00.iconduck.com/assets.00/pending-icon-512x504-9zrlrc78.png"
+                    alt="pending"
+                    className="w-20 h-20"
+                  />
+
+                  <h3 className="agbalumo mb-3  text-xl  text-shadow text-[#e7854d] sm:text-3xl">
+                    Already Registered
+                  </h3>
+                </div>
+              )}
               <h3 className="mb-3 text-center text-2xl font-bold text-white sm:text-3xl">
                 Register for {product?.name} #{params.id}
               </h3>
@@ -223,7 +246,6 @@ export default function Register() {
                     <input
                       id="altmobile"
                       {...register("altmobile", {
-                        required: "Alternate field is required",
                         pattern: {
                           value: /^\d{10}$/,
                           message:
@@ -326,10 +348,10 @@ export default function Register() {
 
                 <div className="flex flex-col md:flex-row justify-between gap-1">
                   <div className="mb-8 w-full md:w-1/2">
-                    <button className="flex w-full items-center justify-center bg-[#2d3139] 	 px-9 py-4  text-white duration-300  rounded-lg text-xl">
+                    <div className="flex w-full items-center justify-center bg-[#2d3139] 	 px-9 py-4  text-white duration-300  rounded-lg text-xl">
                       Token Price: ₹
                       <span>{Math.round(product?.baseprice * 0.3)}</span>
-                    </button>
+                    </div>
                   </div>
                   <div className="mb-8 w-full md:w-1/2 flex">
                     <div className="w-full md:w-1/4 h-auto  flex justify-center ">
@@ -365,9 +387,12 @@ export default function Register() {
 
                 <div className="mb-6">
                   {registeris?.paymentstatus === "success" ? (
-                    <h2 className="flex w-full items-center justify-center rounded-sm bg-blue-600	 px-9 py-4  text-white duration-300 hover:bg-blue-500">
-                      Already Register
-                    </h2>
+                    <Link
+                      to={`/bid-page/${product?.id}`}
+                      className="relative flex w-1/2 items-center justify-center rounded-sm bg-yellow-500	 px-9 py-4 text-xl text-gray-200 duration-300 hover:bg-yellow-300"
+                    >
+                      Bid Now
+                    </Link>
                   ) : (
                     <button
                       type="submit"

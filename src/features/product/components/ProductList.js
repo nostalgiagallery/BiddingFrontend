@@ -151,18 +151,64 @@ export default function ProductList() {
                   <div className="relative md:hidden flex justify-between gap-1 p-2 text-gray-300 text-center py-2 ">
                     <button
                       onClick={(event) => toggleDetails(event, product.id)}
-                      className="relative agbalumo mt-5 bg-indigo-500 hover:bg-indigo-400  py-2 px-4 rounded"
+                      className="relative agbalumo mt-2 bg-indigo-500 hover:bg-indigo-400  py-2 px-4 rounded"
                     >
                       Details
                     </button>
                   </div>
 
-                  <div className=" flex justify-between gap-1 p-2 text-gray-300 text-center py-2 ">
-                    <div className="relative agbalumo mt-5 bg-[#262a32]  py-2 px-4 rounded">
-                      {product.Date}
+                  <div className="flex justify-between items-center p-4 bg-gray-300 rounded-b-lg shadow-md">
+                    <div className="flex items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8 text-indigo-600 mr-3"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        {/* Custom calendar icon */}
+                        <rect
+                          x="3"
+                          y="4"
+                          width="18"
+                          height="18"
+                          rx="2"
+                          ry="2"
+                        />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                      </svg>
+                      <div>
+                        <p className="text-lg font-bold text-indigo-800">
+                          {product.Date}
+                        </p>
+                      </div>
                     </div>
-                    <div className="relative agbalumo mt-5 bg-[#262a32]  py-2 px-4 rounded">
-                      {product.Time}
+                    <div className="flex items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8 text-red-600 mr-3"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        fill="none"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        {/* Updated clearer clock icon */}
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="6" x2="12" y2="12" />
+                        <line x1="12" y1="12" x2="15" y2="15" />
+                      </svg>
+                      <div>
+                        <p className="text-lg font-bold text-red-800">
+                          {product.Time}
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -226,10 +272,29 @@ export default function ProductList() {
                           className="relative"
                           to={`/Product-register/${product.id}`}
                         >
-                          <button className="agbalumo mt-5 bg-yellow-400 text-black  py-2 px-4 rounded">
-                            Register to bid
-                          </button>
+                          {!product.bidExpired && (
+                            <button className="agbalumo mt-5 bg-yellow-400 text-black  py-2 px-4 rounded">
+                              Register to bid
+                            </button>
+                          )}
                         </Link>
+                        {product.bidExpired && (
+                          <h1 className=" mt-2 text-xl font-extrabold tracking-tight leading-none text-gray-300">
+                            Bid Winner:
+                            <span className="text-red-500  text-ellipsis">
+                              🎉 {product?.bidwinner}
+                            </span>
+                          </h1>
+                        )}
+
+                        {product.bidExpired && (
+                          <h1 className="mt-1  text-xl font-extrabold tracking-tight leading-none text-gray-300">
+                            Sold Amount:
+                            <span className="text-black text-ellipsis">
+                              {product?.soldamount}
+                            </span>
+                          </h1>
+                        )}
                       </div>
                     </div>
                     <div className="relative md:hidden flex justify-center">

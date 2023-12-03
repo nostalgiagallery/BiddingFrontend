@@ -64,7 +64,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://bidingapp-82e91ea57bc8.herokuapp.com/bid-page/${registeris?.product.id}`,
+        return_url: `https://biddingapp-5c495b9e8cc1.herokuapp.com/bid-page/${registeris?.product.id}`,
       },
     });
 

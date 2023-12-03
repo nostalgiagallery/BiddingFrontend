@@ -49,7 +49,7 @@ export default function StripeCheckout() {
   return (
     <div className="Stripe bg-[#1D2430] h-screen">
       {loading ? (
-        <div className="flex items-center justify-center h-screen bg-transparent">
+        <div className="flex items-center justify-center h-screen bg-[#1D2430]">
           <Audio
             height={100}
             width={100}

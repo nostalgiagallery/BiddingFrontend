@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import ContinuousRippleEffect from "./RippleEffect";
 import Message from "./Message";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  EditProductAsync,
   fetchProductByIdAsync,
   selectStatus,
   selectedProduct,
@@ -19,9 +20,10 @@ import { selectLoggedinUser } from "../../auth/authSlice";
 import socketIO from "socket.io-client";
 import { useAlert } from "react-alert";
 import { Audio } from "react-loader-spinner";
+import Celebration from "./Celebration ";
 
 let socket;
-const ENDPOINT = "https://bidingapp-82e91ea57bc8.herokuapp.com/";
+const ENDPOINT = "https://biddingapp-5c495b9e8cc1.herokuapp.com/";
 
 export default function Bid() {
   const params = useParams();
@@ -156,6 +158,23 @@ export default function Bid() {
     setBidamount(value);
   };
 
+  useEffect(() => {
+    if (product?.bidExpired) {
+    } else {
+      if (timeRemaining === "Bid Ended") {
+        dispatch(
+          EditProductAsync({
+            ...product,
+            id: params.id,
+            bidExpired: true,
+            bidwinner: TopBidders[0]?.name,
+            soldamount: TopBidders[0]?.bidamount,
+          })
+        );
+      }
+    }
+  }, [timeRemaining, product]);
+
   return (
     <>
       <div className="relative overflow-y-scroll p-1 md:p-4 bg-[hsl(218,25%,15%)] ">
@@ -174,15 +193,32 @@ export default function Bid() {
           </div>
         ) : (
           <>
+            {timeRemaining === "Bid Ended" && (
+              <Celebration
+                name={TopBidders[0]?.name}
+                url={TopBidders[0]?.profilePic}
+              ></Celebration>
+            )}
+
             <div className=" flex flex-col md:flex-row justify-center">
               {timeRemaining && (
                 <div className="agbalumo text-4xl text-red-600 p-3">
-                  Bid will end in: {timeRemaining}
+                  {timeRemaining === "Bid Ended" ? (
+                    <span></span>
+                  ) : (
+                    <span>Bid will end in:</span>
+                  )}
+                  {timeRemaining}
                 </div>
               )}
               {timeRemaining && (
-                <div className="agbalumo text-4xl text-red-600 p-3">
-                  Min Bid Amount: {minBidPrice}
+                <div className="agbalumo text-4xl text-indigo-500 p-3">
+                  {timeRemaining === "Bid Ended" ? (
+                    <span className="text-gray-300">Sold Amount: </span>
+                  ) : (
+                    <span>Min Bid Amount: </span>
+                  )}
+                  {minBidPrice}
                 </div>
               )}
             </div>
@@ -279,7 +315,10 @@ export default function Bid() {
                         </>
                       )}
                       {register?.paymentstatus !== "success" && (
-                        <Link className="agbalumo button w-3/6 bg-[#303948] rounded-lg mt-1 hover:bg-yellow-400 text-gray-300 p-2">
+                        <Link
+                          to={`/Product-register/${product?.id}`}
+                          className="relative w-full agbalumo button  bg-[#303948] rounded-lg mt-1  text-gray-300 p-2"
+                        >
                           Register Now
                         </Link>
                       )}
