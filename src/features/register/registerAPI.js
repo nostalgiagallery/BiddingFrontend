@@ -54,9 +54,9 @@ export function UpdateRegister(register) {
   });
 }
 
-export function fetchtopBidders() {
+export function fetchtopBidders(id) {
   return new Promise(async (resolve) => {
-    const response = await fetch("/registers/topBidders");
+    const response = await fetch("/registers/topBidders/"+id);
     const data = await response.json();
     resolve({ data });
   });

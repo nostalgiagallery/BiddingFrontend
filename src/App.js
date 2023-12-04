@@ -10,7 +10,6 @@ import Login from "./features/auth/components/Login";
 import Process from "./pages/Process";
 import ProductPage from "./pages/ProductPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
-import Register from "./features/register/components/Register";
 import Bidpage from "./pages/Bidpage";
 import { positions, Provider } from "react-alert";
 import AdminProductPage from "./pages/AdminProductPage";
@@ -23,6 +22,7 @@ import Logout from "./features/auth/components/Logout";
 import ProfilePage from "./pages/ProfilePage";
 import StripeCheckout from "./pages/StripeCheckout";
 import PageNotFound from "./pages/404";
+import RegisterPage from "./pages/RegisterPage";
 
 const options = {
   timeout: 4000,
@@ -75,7 +75,7 @@ const router = createBrowserRouter([
     path: "/Product-register/:id",
     element: (
       <Protected>
-        <Register />
+        <RegisterPage />
       </Protected>
     ),
   },

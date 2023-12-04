@@ -130,6 +130,7 @@ const ProductForm = () => {
       setValue("description", selectedProductIS.description);
       setValue("name", selectedProductIS.name);
       setValue("sizes", selectedProductIS.sizes);
+      setValue("duration", selectedProductIS.duration);
       setvideo(selectedProductIS.videolink);
       setvideoposter(selectedProductIS.videoposter);
       Setthumbnailurl(selectedProductIS.imagesrc);
@@ -342,6 +343,25 @@ const ProductForm = () => {
                     type="text"
                     {...register("sizes", {})}
                     id="sizes"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="sm:col-span-1">
+              <label
+                htmlFor="duration"
+                className="text-left block text-sm font-medium leading-6 text-gray-900"
+              >
+                Duration Of Bid In Min :
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
+                  <input
+                    type="number"
+                    {...register("duration", {})}
+                    id="duration"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                   />
                 </div>

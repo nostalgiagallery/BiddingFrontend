@@ -89,13 +89,13 @@ export default function CheckoutForm() {
   return (
     <>
       {!registeris && <Navigate to="/" replace={true}></Navigate>}
-      <div className="grid grid-cols-1 gap-x-10 lg:grid-cols-8 p-10 bg-[#1D2430]">
+      <div className="grid grid-cols-1 gap-x-10 lg:grid-cols-8 p-10 bg-[#1D2430] w-full">
         {registeris && (
-          <span className="lg:col-span-5">
+          <span className="lg:col-span-5 sm:px-6">
             <div className="px-4 py-6 sm:px-6">
               <div className="text-left m-2">
                 <p className="agbalumo text-2xl text-gray-300">Pay</p>
-                <p className=" text-3xl font-bold tracking-tight text-gray-200 ">
+                <p className="text-2xl md:text-3xl font-bold tracking-tight text-gray-200 ">
                   ₹ {Math.round(registeris?.product?.baseprice * 0.3)}.00
                 </p>
                 <h3 >
@@ -108,7 +108,7 @@ export default function CheckoutForm() {
                     <img
                       src={registeris?.product?.imagesrc}
                       alt={registeris?.product?.imagesrc}
-                      className=" h-36 w-36 "
+                      className=" h-36 w-36 rounded-lg"
                     />
 
                     <div className="ml-4 flex flex-1 flex-col">
@@ -119,7 +119,7 @@ export default function CheckoutForm() {
                           </h3>
                           <p className="ml-4  text-2xl text-gray-300">
                             ₹ {Math.round(registeris?.product?.baseprice * 0.3)}
-                            .00
+                            
                           </p>
                         </div>
                       </div>

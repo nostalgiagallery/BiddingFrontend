@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function PageNotFound() {
   return (
-    <div className="bg-[#1D2430] max-h-screen  bg-white overflow-hidden">
+    <div className="bg-[#1D2430] h-screen   overflow-hidden">
       <main className="bg-[#1D2430] grid min-h-full place-items-center py-2 px-6 lg:px-8">
         <div className="text-center">
           <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-200 sm:text-5xl">

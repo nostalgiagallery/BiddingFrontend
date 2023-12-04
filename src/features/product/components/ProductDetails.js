@@ -117,7 +117,7 @@ const ProductDetails = () => {
                     <p className="text-red-300">{product.celebrity.role}</p>
                   </div>
                 </Link>
-                <p className="agbalumo leading-relaxed mt-2 md:text-xl max-h-40 md:max-h-96 overflow-y-scroll p-3 rounded-lg text-gray-300 hover:bg-[#212937]">
+                <p className=" leading-relaxed mt-2 md:text-xl max-h-40 md:max-h-96 overflow-y-scroll p-3 rounded-lg text-gray-300 hover:bg-[#212937]">
                   {product.description}
                 </p>
 

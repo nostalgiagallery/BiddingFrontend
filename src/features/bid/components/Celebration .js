@@ -10,8 +10,8 @@ const Celebration = ({ name, url }) => {
       <div className="w-full  flex  flex-col justify-center items-center">
         <img
           src={url}
-          alt="ProfilePic"
-          className="w-64 h-64 block rounded-full"
+          alt="ProfilePic" 
+          className="w-64 h-64 block rounded-full object-cover"
         />
         <h1 className="text-left mt-4 text-xl md:text-4xl font-extrabold tracking-tight leading-none text-gray-300">
           Bid Winner:

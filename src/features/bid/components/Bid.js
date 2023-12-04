@@ -43,9 +43,12 @@ export default function Bid() {
   const [bidAmount, setBidamount] = useState(null);
   const [error, setError] = useState(false);
   const [minBidPrice, setminBidPrice] = useState(product?.baseprice);
+  const [maxBidPrice, setmaxBidPrice] = useState(product?.baseprice + 10000000);
 
   const send = () => {
-    if (bidAmount <= minBidPrice) {
+    if (bidAmount > maxBidPrice) {
+      alert.error("add a bid amount less than  " + maxBidPrice);
+    } else if (bidAmount <= minBidPrice) {
       setError(true);
       alert.error("add a bid amount more than  " + minBidPrice);
     } else {
@@ -56,6 +59,7 @@ export default function Bid() {
         userdetails: register,
         productId: productid,
       });
+      alert.success("bid Successfully Placed of amount" + bidAmount);
       setBidamount(null);
     }
   };
@@ -68,10 +72,7 @@ export default function Bid() {
     }
   }, [TopBidders, product]);
 
-  useEffect(() => {
-    setTopBidders(topRegisters);
-  }, [topRegisters]);
-
+  
   useEffect(() => {
     socket = socketIO(ENDPOINT, { transports: ["websocket"] });
 
@@ -104,19 +105,24 @@ export default function Bid() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchtopBiddersAsync());
+    dispatch(fetchtopBiddersAsync(params?.id));
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(findRegisterAsync({ userId: user?.id, productId: product?.id }));
   }, [dispatch, user, product]);
 
+  useEffect(() => {
+    setTopBidders(topRegisters);
+  }, [topRegisters]);
+
+
   const [timeRemaining, setTimeRemaining] = useState("");
 
   const calculateTimeRemaining = () => {
     const now = new Date();
     const endTime = new Date(`${product?.Date}T${product?.Time}`);
-    endTime.setHours(endTime.getHours() + 1);
+    endTime.setMinutes(endTime.getMinutes() + (product?.duration || 30));
 
     if (now >= endTime) {
       setTimeRemaining("Bid Ended");
@@ -155,22 +161,29 @@ export default function Bid() {
 
   const bidchangerHandler = (e) => {
     let value = e.target.value;
-    setBidamount(value);
+    const regex = /^\d*$/;
+    if (regex.test(value)) {
+      setBidamount(value);
+    } else {
+      alert.error("add only number");
+    }
   };
 
   useEffect(() => {
     if (product?.bidExpired) {
     } else {
       if (timeRemaining === "Bid Ended") {
-        dispatch(
-          EditProductAsync({
-            ...product,
-            id: params.id,
-            bidExpired: true,
-            bidwinner: TopBidders[0]?.name,
-            soldamount: TopBidders[0]?.bidamount,
-          })
-        );
+        if (TopBidders[0]?.name) {
+          dispatch(
+            EditProductAsync({
+              ...product,
+              id: params.id,
+              bidExpired: true,
+              bidwinner: TopBidders[0]?.name,
+              soldamount: TopBidders[0]?.bidamount,
+            })
+          );
+        }
       }
     }
   }, [timeRemaining, product]);
@@ -292,10 +305,11 @@ export default function Bid() {
                         <>
                           <div className="w-full flex p-2 gap-2">
                             <input
-                              className="agbalumo mt-1 h-12 w-5/6 bg-[#303948] rounded-lg focus:outline-none focus:border-2 focus:border-indigo-500 text-lg text-gray-300 p-1"
+                              className="agbalumo mt-1 h-12 w-5/6 bg-[#303948] rounded-lg focus:outline-none focus:border-2 focus:border-indigo-500 text-lg text-gray-300 p-2"
                               id="bid"
                               type="number"
                               onChange={bidchangerHandler}
+                              placeholder="add only number...."
                             />
 
                             <button

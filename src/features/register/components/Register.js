@@ -122,7 +122,7 @@ export default function Register() {
           />
         </div>
       ) : (
-        <section className="  relative z-10 overflow-y-scroll pb-16  md:pb-20 lg:pb-28   bg-[#1D2430] h-screen md:h-full">
+        <section className="relative z-10 overflow-y-scroll pb-16  md:pb-20 lg:pb-28   bg-[#1D2430] h-screen md:h-full">
           <div className="w-full px-4 ">
             <div className="mx-auto max-w-2/3 rounded  bg-[#1D2430] px-6 py-10  sm:p-[60px] bg-opacity-10">
               {registeris?.paymentstatus === "success" && (
@@ -417,7 +417,7 @@ export default function Register() {
             </div>
           </div>
 
-          <div className="absolute left-0 top-0 z-[-1]  w-full h-full">
+          <div className="hidden md:absolute left-0 top-0 z-[-1]  w-full h-full ">
             <svg
               width="1440"
               height="969"

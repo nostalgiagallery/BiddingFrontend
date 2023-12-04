@@ -42,8 +42,8 @@ export const UpdateRegisterAsync = createAsyncThunk(
 
 export const fetchtopBiddersAsync = createAsyncThunk(
   "registers/fetchtopBidders",
-  async () => {
-    const response = await fetchtopBidders();
+  async (id) => {
+    const response = await fetchtopBidders(id);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
