@@ -35,7 +35,7 @@ export default function Bid() {
   const Registersstatus = useSelector(Registerstatus);
   const ProductStatus = useSelector(selectStatus);
   const register = useSelector(selectedregister);
-  const allmessages = useSelector(selectedallmessages);
+  const allmessages=useSelector(selectedallmessages);
   const user = useSelector(selectLoggedinUser);
   const alert = useAlert();
   const [TopBidders, setTopBidders] = useState(topRegisters);
@@ -115,12 +115,12 @@ export default function Bid() {
 
   useEffect(() => {
     dispatch(findRegisterAsync({ userId: user?.id, productId: params?.id }));
-  }, [dispatch, user, params?.id,register]);
+  }, [dispatch, user, params?.id]);
 
   useEffect(() => {
     setTopBidders(topRegisters);
-    setMessages(allmessages);
-  }, [topRegisters, allmessages]);
+    setMessages(allmessages)
+  }, [topRegisters,allmessages]);
 
   const [timeRemaining, setTimeRemaining] = useState("");
 
