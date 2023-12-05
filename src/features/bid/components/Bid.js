@@ -333,7 +333,7 @@ export default function Bid() {
                           </div>
                         </>
                       )}
-                      {register?.paymentstatus !== "success" && (
+                      {register && register?.paymentstatus !== "success" && (
                         <Link
                           to={`/Product-register/${product?.id}`}
                           className="relative w-full agbalumo button  bg-[#303948] rounded-lg mt-1  text-gray-300 p-2"

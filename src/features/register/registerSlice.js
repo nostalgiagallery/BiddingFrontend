@@ -80,6 +80,7 @@ export const registersSlice = createSlice({
       })
       .addCase(findRegisterAsync.pending, (state) => {
         state.status = "loading";
+        state.selectedRegister =null;
       })
       .addCase(findRegisterAsync.fulfilled, (state, action) => {
         state.status = "idle";
