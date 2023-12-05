@@ -57,7 +57,7 @@ export default function Bid() {
         message: bidAmount,
         id,
         userdetails: register,
-        productId: productid,
+        productId: params?.id,
       });
       alert.success("bid Successfully Placed of amount" + bidAmount);
       setBidamount(null);
@@ -91,6 +91,7 @@ export default function Bid() {
 
     socket.on("topBidders", (data) => {
       // Assuming the server sends an array of top bidders in 'data.topBidders'
+      console.log(data.topBidders)
       setTopBidders(data.topBidders);
     });
 
