@@ -62,3 +62,11 @@ export function fetchtopBidders(id) {
   });
 }
 
+export function fetchallmessages(id) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("/registers/allmessages/"+id);
+    const data = await response.json();
+    resolve({ data });
+  });
+}
+

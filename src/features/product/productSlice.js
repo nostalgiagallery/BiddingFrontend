@@ -4,6 +4,7 @@ import {
   addProduct,
   fetchAllProducts,
   fetchProductById,
+  addTicket,
 } from "./productAPI";
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   status: "idle",
   error: null,
   selectedProduct: null,
+  tickets: null,
 };
 
 export const fetchAllProductsAsync = createAsyncThunk(
@@ -35,6 +37,15 @@ export const addProductAsync = createAsyncThunk(
   "products/addProduct",
   async (product) => {
     const response = await addProduct(product);
+
+    return response.data;
+  }
+);
+
+export const addTicketAsync = createAsyncThunk(
+  "products/addTicket",
+  async (ticket) => {
+    const response = await addTicket(ticket);
 
     return response.data;
   }
@@ -101,9 +112,21 @@ export const productSlice = createSlice({
           (item) => item.id === action.payload.id
         );
         state.products[index] = action.payload;
+      })
+      .addCase(addTicketAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addTicketAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.tickets=action.payload;
+      })
+      .addCase(addTicketAsync.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.payload;
       });
   },
 });
+
 export const { clearSelectedProduct } = productSlice.actions;
 
 export const selectAllProducts = (state) => state.products.products;

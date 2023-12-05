@@ -196,7 +196,13 @@ const ProductDetails = () => {
                       </span>
                     </p>
                     {product.bidExpired ? null : (
-                      <Link to={`/bid-page/${product.id}`}>
+                      <Link
+                        to={
+                          timeLeft[product.id] === "Participate now"
+                            ? `/bid-page/${product.id}`
+                            : `/Product-details/${product.id}`
+                        }
+                      >
                         <button
                           className={`${
                             timeLeft[product.id] === "Participate now"

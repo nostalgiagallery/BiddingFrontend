@@ -20,10 +20,11 @@ export default function ProductList() {
 
   const filteredProducts = products?.filter((product) => {
     return (
-      product?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product?.celebrity.celebrityname
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+      (product?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product?.celebrity.celebrityname
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())) &&
+      product?.deleted === false
     );
   });
 

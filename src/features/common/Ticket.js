@@ -1,11 +1,18 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { addTicketAsync } from "../product/productSlice";
+import { useAlert } from "react-alert";
 
 const Ticket = () => {
+  const dispatch = useDispatch();
+  const alert = useAlert();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   return (
@@ -20,7 +27,9 @@ const Ticket = () => {
         <form
           noValidate
           onSubmit={handleSubmit((data) => {
-            console.log(data);
+            dispatch(addTicketAsync(data));
+            reset();
+            alert.success("ticket submited successfully");
           })}
         >
           <div className="-mx-4 flex flex-wrap">

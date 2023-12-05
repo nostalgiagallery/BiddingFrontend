@@ -41,3 +41,18 @@ export function EditProduct(product) {
     resolve({ data });
   });
 }
+
+
+
+export function addTicket(ticket) {
+  return new Promise(async (resolve) => {
+    const response = await fetch("/tickets", {
+      method: "POST",
+      body: JSON.stringify(ticket),
+      headers: { "content-type": "application/json" },
+    });
+
+    const data = await response.json();
+    resolve({ data });
+  });
+}

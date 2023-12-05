@@ -11,9 +11,11 @@ import {
 } from "../../product/productSlice";
 import {
   Registerstatus,
+  fetchallmessagesAsync,
   fetchtopBiddersAsync,
   findRegisterAsync,
   selectedTopBidders,
+  selectedallmessages,
   selectedregister,
 } from "../../register/registerSlice";
 import { selectLoggedinUser } from "../../auth/authSlice";
@@ -33,13 +35,13 @@ export default function Bid() {
   const Registersstatus = useSelector(Registerstatus);
   const ProductStatus = useSelector(selectStatus);
   const register = useSelector(selectedregister);
+  const allmessages=useSelector(selectedallmessages);
   const user = useSelector(selectLoggedinUser);
   const alert = useAlert();
   const [TopBidders, setTopBidders] = useState(topRegisters);
 
   const [id, setId] = useState("");
   const [messages, setMessages] = useState([]);
-  const [productid, setProductId] = useState(product?.id);
   const [bidAmount, setBidamount] = useState(null);
   const [error, setError] = useState(false);
   const [minBidPrice, setminBidPrice] = useState(product?.baseprice);
@@ -72,7 +74,6 @@ export default function Bid() {
     }
   }, [TopBidders, product]);
 
-  
   useEffect(() => {
     socket = socketIO(ENDPOINT, { transports: ["websocket"] });
 
@@ -82,7 +83,11 @@ export default function Bid() {
 
     socket.emit("joined", {
       user,
-      productId: productid,
+      productId: params?.id,
+    });
+
+    socket.on("welcome", (data) => {
+      setTopBidders(data.topBidders);
     });
 
     socket.on("sendmessage", (data) => {
@@ -90,8 +95,6 @@ export default function Bid() {
     });
 
     socket.on("topBidders", (data) => {
-      // Assuming the server sends an array of top bidders in 'data.topBidders'
-      console.log(data.topBidders)
       setTopBidders(data.topBidders);
     });
 
@@ -99,24 +102,25 @@ export default function Bid() {
       socket.emit("disconnected");
       socket.off();
     };
-  }, [productid]);
+  }, [params?.id]);
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(params?.id));
-  }, [dispatch]);
+  }, [dispatch, params?.id]);
 
   useEffect(() => {
     dispatch(fetchtopBiddersAsync(params?.id));
-  }, [dispatch]);
+    dispatch(fetchallmessagesAsync(params?.id));
+  }, [dispatch, params?.id]);
 
   useEffect(() => {
-    dispatch(findRegisterAsync({ userId: user?.id, productId: product?.id }));
-  }, [dispatch, user, product]);
+    dispatch(findRegisterAsync({ userId: user?.id, productId: params?.id }));
+  }, [dispatch, user, params?.id]);
 
   useEffect(() => {
     setTopBidders(topRegisters);
-  }, [topRegisters]);
-
+    setMessages(allmessages);
+  }, [topRegisters,allmessages]);
 
   const [timeRemaining, setTimeRemaining] = useState("");
 

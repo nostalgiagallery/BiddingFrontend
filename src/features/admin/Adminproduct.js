@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
+  EditProductAsync,
   fetchAllProductsAsync,
   selectAllProducts,
   selectStatus,
 } from "../product/productSlice";
 import { Audio } from "react-loader-spinner";
+import Modal from "../common/Modal";
 
 export default function AdminProduct() {
   const [showDetails, setShowDetails] = useState(null);
@@ -15,6 +17,7 @@ export default function AdminProduct() {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
   const status = useSelector(selectStatus);
+  const [openModal, setopenModal] = useState(null);
 
   const filteredProducts = products.filter((product) => {
     return (
@@ -165,9 +168,41 @@ export default function AdminProduct() {
                     >
                       Edit
                     </Link>
-                    <button className="relative agbalumo mt-5 bg-red-500 hover:bg-red-400  py-2 px-4 rounded">
-                      Delete
-                    </button>
+                    <Modal
+                      title={`Delete Product (${product.name})`}
+                      message={`Are you sure you want to delete? ${product.name}`}
+                      dangerOption="Delete"
+                      cancelOption="Cancel"
+                      showModal={openModal === product.id}
+                      cancelAction={(e) => setopenModal(null)}
+                      e
+                      dangerAction={(e) => {
+                        dispatch(
+                          EditProductAsync({
+                            ...product,
+                            id: product?.id,
+                            deleted: true,
+                          })
+                        );
+                        setopenModal(null);
+                      }}
+                    />
+                    {!product.deleted && (
+                      <button
+                        className="relative agbalumo mt-5 bg-red-500 hover:bg-red-400  py-2 px-4 rounded"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setopenModal(product.id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    )}
+                    {product.deleted && (
+                      <h1 className="relative py-2 px-4  mt-5 text-lg  text-red-500">
+                        Product Deleted
+                      </h1>
+                    )}
                   </div>
 
                   {/* Product details */}

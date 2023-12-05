@@ -17,7 +17,7 @@ const Homepage = () => {
               <div className="w-full px-4">
                 <div className=" mx-auto max-w-[800px] text-center">
                   <h1 className="agbalumo mb-5 text-3xl font-bold leading-tight text-white  sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight custom-text-shadow">
-                    Nostalgia Memory
+                    Nostalgia Gallery
                   </h1>
                   <p className="text-gray-200 mb-12 text-base !leading-relaxed text-body-color sm:text-lg md:text-xl">
                     "Reviving Memories, Connecting Hearts."

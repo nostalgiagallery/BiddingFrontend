@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   UpdateRegister,
   addRegister,
+  fetchallmessages,
   fetchtopBidders,
   findRegister,
 } from "./registerAPI";
@@ -11,6 +12,7 @@ const initialState = {
   selectedRegister: null,
   status: "idle",
   error: null,
+  messages: [],
 };
 
 export const addRegisterAsync = createAsyncThunk(
@@ -44,6 +46,15 @@ export const fetchtopBiddersAsync = createAsyncThunk(
   "registers/fetchtopBidders",
   async (id) => {
     const response = await fetchtopBidders(id);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
+export const fetchallmessagesAsync = createAsyncThunk(
+  "registers/fetchallmessages",
+  async (id) => {
+    const response = await fetchallmessages(id);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -98,6 +109,17 @@ export const registersSlice = createSlice({
       .addCase(fetchtopBiddersAsync.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.payload;
+      })
+      .addCase(fetchallmessagesAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchallmessagesAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.messages = action.payload;
+      })
+      .addCase(fetchallmessagesAsync.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.payload;
       });
   },
 });
@@ -106,6 +128,8 @@ export const registersSlice = createSlice({
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectedregister = (state) => state.registers.selectedRegister;
-export const selectedTopBidders= (state) => state.registers.registers;
-export const Registerstatus= (state) => state.registers.status;
+export const selectedTopBidders = (state) => state.registers.registers;
+export const Registerstatus = (state) => state.registers.status;
+export const selectedallmessages = (state) => state.registers.messages;
+
 export default registersSlice.reducer;
