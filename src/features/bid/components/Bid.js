@@ -35,7 +35,7 @@ export default function Bid() {
   const Registersstatus = useSelector(Registerstatus);
   const ProductStatus = useSelector(selectStatus);
   const register = useSelector(selectedregister);
-  const allmessages=useSelector(selectedallmessages);
+  const allmessages = useSelector(selectedallmessages);
   const user = useSelector(selectLoggedinUser);
   const alert = useAlert();
   const [TopBidders, setTopBidders] = useState(topRegisters);
@@ -115,12 +115,12 @@ export default function Bid() {
 
   useEffect(() => {
     dispatch(findRegisterAsync({ userId: user?.id, productId: params?.id }));
-  }, [dispatch, user, params?.id]);
+  }, [dispatch, user, params?.id,register]);
 
   useEffect(() => {
     setTopBidders(topRegisters);
     setMessages(allmessages);
-  }, [topRegisters,allmessages]);
+  }, [topRegisters, allmessages]);
 
   const [timeRemaining, setTimeRemaining] = useState("");
 
@@ -333,7 +333,7 @@ export default function Bid() {
                           </div>
                         </>
                       )}
-                      {register && register?.paymentstatus !== "success" && (
+                      {register?.paymentstatus !== "success" && (
                         <Link
                           to={`/Product-register/${product?.id}`}
                           className="relative w-full agbalumo button  bg-[#303948] rounded-lg mt-1  text-gray-300 p-2"
