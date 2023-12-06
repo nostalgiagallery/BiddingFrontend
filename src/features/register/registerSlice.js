@@ -5,14 +5,17 @@ import {
   fetchallmessages,
   fetchtopBidders,
   findRegister,
+  findallRegister,
 } from "./registerAPI";
 
 const initialState = {
   registers: [],
+  topbidders:[],
   selectedRegister: null,
   status: "idle",
   error: null,
   messages: [],
+  registersStatus:false
 };
 
 export const addRegisterAsync = createAsyncThunk(
@@ -60,6 +63,15 @@ export const fetchallmessagesAsync = createAsyncThunk(
   }
 );
 
+export const findallRegisterAsync = createAsyncThunk(
+  "registers/findallRegister",
+  async (user) => {
+    const response = await findallRegister(user);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
 export const registersSlice = createSlice({
   name: "registers",
   initialState,
@@ -77,6 +89,20 @@ export const registersSlice = createSlice({
       .addCase(addRegisterAsync.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.payload;
+      })
+      .addCase(findallRegisterAsync.pending, (state) => {
+        state.status = "loading";
+        state.registersStatus=true;
+      })
+      .addCase(findallRegisterAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.registers = action.payload;
+        state.registersStatus=false;
+      })
+      .addCase(findallRegisterAsync.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.payload;
+        state.registersStatus=false;
       })
       .addCase(findRegisterAsync.pending, (state) => {
         state.status = "loading";
@@ -99,13 +125,14 @@ export const registersSlice = createSlice({
           (item) => item.id === action.payload.id
         );
         state.registers[index] = action.payload;
+        state.selectedRegister = action.payload;
       })
       .addCase(fetchtopBiddersAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchtopBiddersAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.registers = action.payload;
+        state.topbidders = action.payload;
       })
       .addCase(fetchtopBiddersAsync.rejected, (state, action) => {
         state.status = "rejected";
@@ -129,8 +156,9 @@ export const registersSlice = createSlice({
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectedregister = (state) => state.registers.selectedRegister;
-export const selectedTopBidders = (state) => state.registers.registers;
+export const selectedTopBidders = (state) => state.registers.topbidders;
+export const selectedallregisters = (state) => state.registers.registers;
 export const Registerstatus = (state) => state.registers.status;
 export const selectedallmessages = (state) => state.registers.messages;
-
+export const selectedregistersStatus=(state) => state.registers.registersStatus;
 export default registersSlice.reducer;

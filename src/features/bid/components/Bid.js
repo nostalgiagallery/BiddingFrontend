@@ -11,6 +11,7 @@ import {
 } from "../../product/productSlice";
 import {
   Registerstatus,
+  UpdateRegisterAsync,
   fetchallmessagesAsync,
   fetchtopBiddersAsync,
   findRegisterAsync,
@@ -35,7 +36,7 @@ export default function Bid() {
   const Registersstatus = useSelector(Registerstatus);
   const ProductStatus = useSelector(selectStatus);
   const register = useSelector(selectedregister);
-  const allmessages=useSelector(selectedallmessages);
+  const allmessages = useSelector(selectedallmessages);
   const user = useSelector(selectLoggedinUser);
   const alert = useAlert();
   const [TopBidders, setTopBidders] = useState(topRegisters);
@@ -188,10 +189,22 @@ export default function Bid() {
               soldamount: TopBidders[0]?.bidamount,
             })
           );
+          if (
+           ( TopBidders[0]?.name === register?.name) &&
+           ( TopBidders[0]?.bidamount === register?.bidamount)
+          ) {
+            dispatch(
+              UpdateRegisterAsync({
+                ...register,
+                id: register.id,
+                bidwinner: true,
+              })
+            );
+          }
         }
       }
     }
-  }, [timeRemaining, product]);
+  }, [timeRemaining, product,TopBidders]);
 
   return (
     <>
@@ -270,7 +283,7 @@ export default function Bid() {
                     <div className="flex flex-col">
                       <span className="agbalumo text-xl text-yellow-300">
                         {TopBidders && TopBidders.length !== 0 && (
-                          <>Mr {TopBidders[0]?.name}</>
+                          <> {TopBidders[0]?.name}</>
                         )}
                       </span>
                       {TopBidders && TopBidders.length !== 0 ? (

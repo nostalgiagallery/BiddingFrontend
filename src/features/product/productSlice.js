@@ -112,6 +112,7 @@ export const productSlice = createSlice({
           (item) => item.id === action.payload.id
         );
         state.products[index] = action.payload;
+        state.selectedProduct = action.payload;
       })
       .addCase(addTicketAsync.pending, (state) => {
         state.status = "loading";

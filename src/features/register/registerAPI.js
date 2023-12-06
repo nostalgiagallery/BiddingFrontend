@@ -40,6 +40,27 @@ export function findRegister(userProduct) {
   });
 }
 
+export function findallRegister(user) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch("/registers/getallRegisters", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: { "content-type": "application/json" },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch registers");
+      }
+
+      const data = await response.json();
+      resolve({ data });
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 
 export function UpdateRegister(register) {
   return new Promise(async (resolve) => {

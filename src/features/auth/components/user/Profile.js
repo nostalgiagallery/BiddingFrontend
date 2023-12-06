@@ -96,11 +96,11 @@ const Profile = () => {
             </h1>
             <h1 className="text-left mt-4 text-lg md:text-2xl font-normal  md:font-extrabold  tracking-tight leading-none text-gray-300">
               Email address:
-              <span className="text-red-400 ml-1">{user?.email}</span>
+              <span className="text-red-600 ml-1">{user?.email}</span>
             </h1>
             {user?.role === "admin" && (
               <h3 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-200 font-serif">
-                role:<span className="text-indigo-400 ml-1">{user?.role}</span>
+                role:<span className="text-green-600 ml-1">{user?.role}</span>
               </h3>
             )}
           </div>
