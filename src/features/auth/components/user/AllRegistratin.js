@@ -12,7 +12,6 @@ import { Audio } from "react-loader-spinner";
 
 const AllRegistration = () => {
   const user = useSelector(selectLoggedinUser);
-  const alert = useAlert();
   const dispatch = useDispatch();
   const registers = useSelector(selectedallregisters);
   const selectedregistersStatusis = useSelector(selectedregistersStatus);
@@ -23,7 +22,6 @@ const AllRegistration = () => {
 
   return (
     <section className=" bg-[#1D2430] relative z-[1]">
-      {console.log(registers)}
       <div className=" text-gray-200 p-10 ">
         <h2 className="text-4xl font-bold tracking-tight text-gray-300 mb-6">
           All <span className="text-indigo-500">Registration</span>
@@ -43,10 +41,9 @@ const AllRegistration = () => {
           </div>
         ) : (
           <>
-            {registers.length === 0 && (
+            {registers?.length === 0 && (
               <h2 className="text-4xl font-bold tracking-tight text-gray-300 mb-6">
-                No Register Found{" "}
-                <span className="text-indigo-500">Registration</span>
+                No Registration Found
               </h2>
             )}
             {registers?.map((register) => {
@@ -57,28 +54,28 @@ const AllRegistration = () => {
                 >
                   <div className="lg:col-span-4 ">
                     <img
-                      src={register?.product.imagesrc}
-                      alt={register?.product.imagesrc}
+                      src={register?.product?.imagesrc}
+                      alt={register?.product?.imagesrc}
                       className="w-64 h-64 block rounded-full"
                     />
 
                     <h1 className=" text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-black">
                       Product Name:
                       <span className="text-indigo-800 ml-1">
-                        {register?.product.name}
+                        {register?.product?.name}
                       </span>
                     </h1>
 
                     <h1 className=" text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-black">
                       Base Price:
                       <span className="text-gray-300 ml-2">
-                        ₹ {register?.product.baseprice}
+                        ₹ {register?.product?.baseprice}
                       </span>
                     </h1>
                   </div>
                   <div className="lg:col-span-4  ">
                     <img
-                      src={register?.user.profilePic}
+                      src={register?.user?.profilePic}
                       alt="ProfilePic"
                       className="w-20 h-20 block rounded-full"
                     />
@@ -90,19 +87,19 @@ const AllRegistration = () => {
                     <h1 className=" text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       User Name:
                       <span className="text-indigo-500 ml-1">
-                        {register?.user.name}
+                        {register?.user?.name}
                       </span>
                     </h1>
                     <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       User Email:
                       <span className="text-black ml-1">
-                        {register?.user.email}
+                        {register?.user?.email}
                       </span>
                     </h1>
                     <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       Token Amount:
                       <span className="text-black ml-1">
-                        ₹ {register?.product.baseprice * 0.3}
+                        ₹ {register?.product?.baseprice * 0.3}
                       </span>
                     </h1>
                     <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
@@ -138,7 +135,7 @@ const AllRegistration = () => {
                             : "text-red-400"
                         }`}
                       >
-                        {register?.bidwinner=== true?"yes":"No"}
+                        {register?.bidwinner === true ? "yes" : "No"}
                       </span>
                     </h1>
                   </div>

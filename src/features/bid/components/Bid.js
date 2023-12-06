@@ -120,8 +120,8 @@ export default function Bid() {
 
   useEffect(() => {
     setTopBidders(topRegisters);
-    setMessages(allmessages)
-  }, [topRegisters,allmessages]);
+    setMessages(allmessages);
+  }, [topRegisters, allmessages]);
 
   const [timeRemaining, setTimeRemaining] = useState("");
 
@@ -189,22 +189,20 @@ export default function Bid() {
               soldamount: TopBidders[0]?.bidamount,
             })
           );
-          if (
-           ( TopBidders[0]?.name === register?.name) &&
-           ( TopBidders[0]?.bidamount === register?.bidamount)
-          ) {
+          if (TopBidders[0]?.name === register?.name) {
             dispatch(
               UpdateRegisterAsync({
                 ...register,
                 id: register.id,
                 bidwinner: true,
+                product:register.id
               })
             );
           }
         }
       }
     }
-  }, [timeRemaining, product,TopBidders]);
+  }, [timeRemaining, product, TopBidders]);
 
   return (
     <>

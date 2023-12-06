@@ -152,7 +152,8 @@ export default function Register() {
                 </div>
               )}
               <h3 className="mb-3 text-center text-2xl font-bold text-white sm:text-3xl">
-                Register for {product?.name} #{params.id}
+                Register for ({product?.name})
+                <span className="text-lg md:text-xl"> #{params.id}</span>
               </h3>
               <form
                 noValidate
