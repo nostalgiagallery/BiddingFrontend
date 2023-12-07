@@ -91,3 +91,11 @@ export function fetchallmessages(id) {
   });
 }
 
+
+export function fetchallregisters() {
+  return new Promise(async (resolve) => {
+    const response = await fetch("/registers/allregisters/");
+    const data = await response.json();
+    resolve({ data });
+  });
+}

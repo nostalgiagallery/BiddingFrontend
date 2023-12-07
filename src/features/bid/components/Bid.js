@@ -195,7 +195,7 @@ export default function Bid() {
                 ...register,
                 id: register.id,
                 bidwinner: true,
-                product:product?.id
+                product: product?.id,
               })
             );
           }
@@ -222,7 +222,7 @@ export default function Bid() {
           </div>
         ) : (
           <>
-            {timeRemaining === "Bid Ended" && (
+            {timeRemaining === "Bid Ended" && TopBidders[0]?.name && (
               <Celebration
                 name={TopBidders[0]?.name}
                 url={TopBidders[0]?.profilePic}
@@ -243,11 +243,11 @@ export default function Bid() {
               {timeRemaining && (
                 <div className="agbalumo text-4xl text-indigo-500 p-3">
                   {timeRemaining === "Bid Ended" ? (
-                    <span className="text-gray-300">Sold Amount: </span>
+                    <span className="text-gray-300">{ TopBidders[0]?.name? <>Sold Amount:</>:<>Unsold</>} </span>
                   ) : (
                     <span>Min Bid Amount: </span>
                   )}
-                  {minBidPrice}
+                 ( {minBidPrice})
                 </div>
               )}
             </div>

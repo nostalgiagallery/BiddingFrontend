@@ -23,6 +23,7 @@ import ProfilePage from "./pages/ProfilePage";
 import StripeCheckout from "./pages/StripeCheckout";
 import PageNotFound from "./pages/404";
 import RegisterPage from "./pages/RegisterPage";
+import RegisterDashboard from "./features/admin/RegisterDashboard";
 
 const options = {
   timeout: 4000,
@@ -64,6 +65,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedAdmin>
         <AdminProductFormPage />
+      </ProtectedAdmin>
+    ),
+  },
+  {
+    path: "/registration-dashboard",
+    element: (
+      <ProtectedAdmin>
+        <RegisterDashboard />
       </ProtectedAdmin>
     ),
   },

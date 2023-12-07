@@ -50,7 +50,7 @@ const Login = () => {
             <div className="w-full px-4">
               <div className="mx-auto max-w-[500px] rounded  bg-[#1D2430] px-6 py-10  sm:p-[60px] bg-opacity-10">
                 <h3 className="mb-3 text-center text-2xl font-bold text-white sm:text-3xl">
-                  Sign in to your account
+                  Login to your account
                 </h3>
                 <p className="mb-11 text-center text-base font-medium text-gray-400">
                   Login to your account for a faster checkout.
@@ -106,13 +106,6 @@ const Login = () => {
                       id="password"
                       {...register("password", {
                         required: " password field is required",
-                        pattern: {
-                          value:
-                            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
-                          message: `- at least 8 characters  \n
-                           - must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number \n
-                           - Can contain special characters`,
-                        },
                       })}
                       type="password"
                       placeholder="Enter your Password"
@@ -158,7 +151,7 @@ const Login = () => {
                           ></path>
                         </svg>
                       ) : (
-                        <span>Sign in</span>
+                        <span>Log in</span>
                       )}
                     </button>
                   </div>

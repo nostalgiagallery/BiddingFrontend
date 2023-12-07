@@ -3,6 +3,7 @@ import {
   UpdateRegister,
   addRegister,
   fetchallmessages,
+  fetchallregisters,
   fetchtopBidders,
   findRegister,
   findallRegister,
@@ -10,12 +11,12 @@ import {
 
 const initialState = {
   registers: [],
-  topbidders:[],
+  topbidders: [],
   selectedRegister: null,
   status: "idle",
   error: null,
   messages: [],
-  registersStatus:false
+  registersStatus: false,
 };
 
 export const addRegisterAsync = createAsyncThunk(
@@ -63,6 +64,15 @@ export const fetchallmessagesAsync = createAsyncThunk(
   }
 );
 
+export const fetchallregistersAsync = createAsyncThunk(
+  "registers/fetchallregisters",
+  async () => {
+    const response = await fetchallregisters();
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
+
 export const findallRegisterAsync = createAsyncThunk(
   "registers/findallRegister",
   async (user) => {
@@ -92,21 +102,21 @@ export const registersSlice = createSlice({
       })
       .addCase(findallRegisterAsync.pending, (state) => {
         state.status = "loading";
-        state.registersStatus=true;
+        state.registersStatus = true;
       })
       .addCase(findallRegisterAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.registers = action.payload;
-        state.registersStatus=false;
+        state.registersStatus = false;
       })
       .addCase(findallRegisterAsync.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.payload;
-        state.registersStatus=false;
+        state.registersStatus = false;
       })
       .addCase(findRegisterAsync.pending, (state) => {
         state.status = "loading";
-        state.selectedRegister =null;
+        state.selectedRegister = null;
       })
       .addCase(findRegisterAsync.fulfilled, (state, action) => {
         state.status = "idle";
@@ -148,6 +158,17 @@ export const registersSlice = createSlice({
       .addCase(fetchallmessagesAsync.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.payload;
+      })
+      .addCase(fetchallregistersAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchallregistersAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.registers = action.payload;
+      })
+      .addCase(fetchallregistersAsync.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.payload;
       });
   },
 });
@@ -160,5 +181,6 @@ export const selectedTopBidders = (state) => state.registers.topbidders;
 export const selectedallregisters = (state) => state.registers.registers;
 export const Registerstatus = (state) => state.registers.status;
 export const selectedallmessages = (state) => state.registers.messages;
-export const selectedregistersStatus=(state) => state.registers.registersStatus;
+export const selectedregistersStatus = (state) =>
+  state.registers.registersStatus;
 export default registersSlice.reducer;

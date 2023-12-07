@@ -27,7 +27,7 @@ const AllRegistration = () => {
           All <span className="text-indigo-500">Registration</span>
         </h2>
         {selectedregistersStatusis ? (
-          <div className="flex items-center justify-center h-screen bg-transparent">
+          <div className="flex p-3 m-5 justify-center h-screen bg-transparent">
             <Audio
               height={100}
               width={100}
@@ -49,7 +49,7 @@ const AllRegistration = () => {
             {registers?.map((register) => {
               return (
                 <div
-                  className="bg-gray-500 bg-opacity-75 grid grid-cols-1 gap-x-10 lg:grid-cols-8 p-10 rounded-lg"
+                  className="bg-gray-500 bg-opacity-75 grid grid-cols-1 gap-x-10 lg:grid-cols-8 p-10 rounded-lg m-1"
                   key={register?.id}
                 >
                   <div className="lg:col-span-4 ">
@@ -79,30 +79,30 @@ const AllRegistration = () => {
                       alt="ProfilePic"
                       className="w-20 h-20 block rounded-full"
                     />
-                    <h1 className=" text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
-                      <span className="text-gray-300 ml-1">
+                    <h1 className=" text-left mt-4 text-sm md:text-xl font-extrabold tracking-tight leading-none text-gray-300">
+                      <span className="text-gray-300 ml-1 ">
                         #{register?.id}
                       </span>
                     </h1>
-                    <h1 className=" text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
+                    <h1 className=" text-left mt-4  text-sm md:text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       User Name:
                       <span className="text-indigo-500 ml-1">
                         {register?.name}
                       </span>
                     </h1>
-                    <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
+                    <h1 className="text-left mt-4  text-sm md:text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       User Email:
                       <span className="text-black ml-1">
                         {register?.email}
                       </span>
                     </h1>
-                    <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
+                    <h1 className="text-left mt-4  text-sm md:text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       Token Amount:
                       <span className="text-black ml-1">
                         ₹ {register?.product?.baseprice * 0.3}
                       </span>
                     </h1>
-                    <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
+                    <h1 className="text-left mt-4  text-sm md:text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       paymentstatus:
                       <span
                         className={`ml-1 ${
@@ -114,7 +114,7 @@ const AllRegistration = () => {
                         {register?.paymentstatus}
                       </span>
                     </h1>
-                    <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
+                    <h1 className="text-left mt-4  text-sm md:text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       Refunded:
                       <span
                         className={`ml-1 ${
@@ -126,7 +126,7 @@ const AllRegistration = () => {
                         {register?.refundstatus}
                       </span>
                     </h1>
-                    <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
+                    <h1 className="text-left mt-4  text-sm md:text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       Bidwinner:
                       <span
                         className={`ml-1 ${

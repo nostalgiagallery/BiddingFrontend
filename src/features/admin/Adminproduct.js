@@ -112,6 +112,12 @@ export default function AdminProduct() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="m-5 border-1 border-indigo-500 p-2 rounded-md text-black focus:outline-none focus:ring focus:border-indigo-500 w-2/3 md:w-1/2 text-sm md:text-lg font-semibold"
           />
+           <Link
+            to={`/registration-dashboard`}
+            className="relative agbalumo mt-5 text-gray-200 bg-green-700 hover:bg-green-500  py-2 px-4 rounded"
+          >
+            Registration Manage
+          </Link>
           {filteredProducts.length === 0 && (
             <h1 className="w-full text-4xl  text-gray-300 mx-auto mt-8">
               No products found..
@@ -143,7 +149,7 @@ export default function AdminProduct() {
                   {/* Additional product title */}
                   <div className="flex justify-between gap-1 p-2 text-gray-300 text-center py-2 ">
                     <h3 className="text-lg">{product.name}</h3>
-                    {product.bidExpired ? null : (
+                    {/* {product.bidExpired ? null : (
                       <Link
                         to={
                           timeLeft[product.id] === "Bid Now"
@@ -158,7 +164,7 @@ export default function AdminProduct() {
                       >
                         {timeLeft[product.id]}
                       </Link>
-                    )}
+                    )} */}
                   </div>
 
                   <div className="flex justify-between gap-1 p-2 text-gray-300 text-center py-2 ">
@@ -175,7 +181,7 @@ export default function AdminProduct() {
                       cancelOption="Cancel"
                       showModal={openModal === product.id}
                       cancelAction={(e) => setopenModal(null)}
-                      e
+                      
                       dangerAction={(e) => {
                         dispatch(
                           EditProductAsync({

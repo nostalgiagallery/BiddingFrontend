@@ -72,7 +72,7 @@ const Signup = () => {
                       htmlFor="email"
                       className="mb-3 block text-lg  text-gray-300"
                     >
-                      Work Email
+                      Your Email
                     </label>
                     <input
                       id="email"
