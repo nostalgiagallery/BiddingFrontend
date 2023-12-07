@@ -75,7 +75,7 @@ const AllRegistration = () => {
                   </div>
                   <div className="lg:col-span-4  ">
                     <img
-                      src={register?.user?.profilePic}
+                      src={register?.profilePic}
                       alt="ProfilePic"
                       className="w-20 h-20 block rounded-full"
                     />
@@ -87,13 +87,13 @@ const AllRegistration = () => {
                     <h1 className=" text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       User Name:
                       <span className="text-indigo-500 ml-1">
-                        {register?.user?.name}
+                        {register?.name}
                       </span>
                     </h1>
                     <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">
                       User Email:
                       <span className="text-black ml-1">
-                        {register?.user?.email}
+                        {register?.email}
                       </span>
                     </h1>
                     <h1 className="text-left mt-4 text-xl font-extrabold tracking-tight leading-none text-gray-300">

@@ -195,7 +195,7 @@ export default function Bid() {
                 ...register,
                 id: register.id,
                 bidwinner: true,
-                product:register.id
+                product:product?.id
               })
             );
           }
