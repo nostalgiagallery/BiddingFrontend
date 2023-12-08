@@ -43,10 +43,19 @@ https://biddingapp-5c495b9e8cc1.herokuapp.com/
 # login signup validation
 
 
-https://github.com/nostalgiagallery/BiddingFrontend/assets/152589026/20acea55-de6b-46f0-be9d-bbcc3e013a10
+https://github.com/nostalgiagallery/BiddingFrontend/assets/152589026/4caed258-e855-4d1b-9ebd-e78f2a51a44d
+
+
 
 # password change 
 
-https://github.com/nostalgiagallery/BiddingFrontend/assets/152589026/5ae86643-bea5-45aa-9d82-84e22861a73c
+
+
+https://github.com/nostalgiagallery/BiddingFrontend/assets/152589026/fb4bb776-7c84-4da6-9c3b-d68c05ff15c7
+
 
 # Home page 
+
+
+https://github.com/nostalgiagallery/BiddingFrontend/assets/152589026/347d041d-472f-473c-9aba-f736d6c48b71
+
