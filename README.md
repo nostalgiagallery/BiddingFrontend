@@ -41,3 +41,9 @@ https://biddingapp-5c495b9e8cc1.herokuapp.com/
 ![Alt text](image-1.png)
 
 # login signup validation
+
+
+
+
+https://github.com/nostalgiagallery/BiddingFrontend/assets/152589026/20acea55-de6b-46f0-be9d-bbcc3e013a10
+
