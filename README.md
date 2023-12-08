@@ -59,3 +59,10 @@ https://github.com/nostalgiagallery/BiddingFrontend/assets/152589026/fb4bb776-7c
 
 https://github.com/nostalgiagallery/BiddingFrontend/assets/152589026/347d041d-472f-473c-9aba-f736d6c48b71
 
+
+# process page 
+
+
+
+https://github.com/nostalgiagallery/BiddingFrontend/assets/152589026/874f1880-bd45-4073-8e5a-4f0a5805a859
+
