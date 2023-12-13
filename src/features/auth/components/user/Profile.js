@@ -9,6 +9,9 @@ const Profile = () => {
   const [edit, setEdit] = useState(true);
   const [userName, setName] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState({
+    thumbnailLoading: false,
+  });
   const alert = useAlert();
   const dispatch = useDispatch();
 
@@ -16,23 +19,30 @@ const Profile = () => {
     setEdit(!edit);
   };
 
-  function uploadImage(file, setUrl) {
+  function uploadImage(file, setUrl, type) {
     const formData = new FormData();
     formData.append("file", file);
+    setLoading((prevLoading) => ({ ...prevLoading, [type]: true }));
 
-    return fetch("http://localhost:8080/uploadFile", {
+    return fetch("https://biddingapp-5c495b9e8cc1.herokuapp.com/uploadFile", {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
+        setLoading((prevLoading) => ({ ...prevLoading, [type]: false }));
         if (data.error) {
-          console.error("Upload failed:", data.error);
+          alert.error(`uploading error in ${type}`);
+          console.error("Upload failed:");
         } else {
           setUrl(data?.url);
         }
       })
-      .catch((error) => console.error("Upload failed:", error));
+      .catch((error) => {
+        setLoading((prevLoading) => ({ ...prevLoading, [type]: false }));
+        console.error("Upload failed:", error);
+        alert.error(`uploading error in ${type}`);
+      });
   }
 
   const SubmitHandler = (e) => {
@@ -53,7 +63,7 @@ const Profile = () => {
   const inputchangeHandler = (e) => {
     const imagedata = e.target.files[0];
     if (imagedata) {
-      uploadImage(imagedata, setSelectedFile);
+      uploadImage(imagedata, setSelectedFile, "thumbnailLoading");
     }
   };
 
@@ -142,7 +152,11 @@ const Profile = () => {
                       htmlFor="fileInput"
                       className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-pointer"
                     >
-                      Change
+                      {loading.thumbnailLoading ? (
+                        <p>Uploading..</p>
+                      ) : (
+                        <p> Change</p>
+                      )}
                     </label>
                     <input
                       id="fileInput"
