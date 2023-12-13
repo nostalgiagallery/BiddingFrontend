@@ -24,6 +24,7 @@ import StripeCheckout from "./pages/StripeCheckout";
 import PageNotFound from "./pages/404";
 import RegisterPage from "./pages/RegisterPage";
 import RegisterDashboard from "./features/admin/RegisterDashboard";
+import SignupAutorized from "./features/auth/components/SignupAutorized";
 
 const options = {
   timeout: 4000,
@@ -132,6 +133,10 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "/signup-authorized",
+    element: <SignupAutorized />,
   },
   {
     path: "*",

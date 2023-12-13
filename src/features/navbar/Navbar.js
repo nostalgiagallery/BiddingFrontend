@@ -134,11 +134,11 @@ export default function Navbar({ children }) {
                         )}
                       >
                         <img
-                          className="h-8 w-8 rounded-full"
+                          className="h-8 w-8 rounded-full object-cover"
                           src={
                             user?.profilePic
                               ? user?.profilePic
-                              : "https://www.pikpng.com/pngl/m/16-168770_user-iconset-no-profile-picture-icon-circle-clipart.png"
+                              : "https://github-production-user-asset-6210df.s3.amazonaws.com/152589026/290177737-5910f1ba-8f54-406b-8603-b1eba6e5bd74.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20231213%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231213T114416Z&X-Amz-Expires=300&X-Amz-Signature=cf3616f48dd3b891cf2b94ddb5eba032d6091af7238a386aca4fcf935b380a82&X-Amz-SignedHeaders=host&actor_id=152589026&key_id=0&repo_id=725939625"
                           }
                           alt="profile pic"
                         />

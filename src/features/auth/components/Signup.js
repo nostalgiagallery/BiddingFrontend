@@ -7,7 +7,9 @@ import {
   selectLoggedinUser,
   selectStatus,
   errorhandler,
-  createUserAsync,
+  selectMailSent,
+  mailsentreset,
+  signupRequestAsync,
 } from "../authSlice";
 import { useAlert } from "react-alert";
 
@@ -18,6 +20,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const user = useSelector(selectLoggedinUser);
   const alert = useAlert();
+  const mailsent = useSelector(selectMailSent);
 
   const {
     register,
@@ -33,12 +36,25 @@ const Signup = () => {
         alert.info("Redirect to LogIn");
         dispatch(errorhandler());
         navigate("/login", { replace: true });
-      }, 1000);
+      }, 2000);
     }
     return () => {
       clearTimeout(timeoutId);
     };
   }, [dispatch, error, navigate]);
+
+  useEffect(() => {
+    let timeoutId;
+    if (mailsent) {
+      timeoutId = setTimeout(() => {
+        dispatch(mailsentreset());
+        reset();
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [dispatch, reset, mailsent]);
 
   return (
     <>
@@ -59,10 +75,9 @@ const Signup = () => {
                   noValidate
                   onSubmit={handleSubmit((data) => {
                     dispatch(
-                      createUserAsync({
+                      signupRequestAsync({
                         email: data.email,
                         password: data.password,
-                        role: "user",
                       })
                     );
                   })}
@@ -143,6 +158,11 @@ const Signup = () => {
                       </p>
                     )}
                     {error && <p className="text-red-500">{error}</p>}
+                    {mailsent && (
+                      <p className="text-green-500 p-1">
+                       Email sent for authorization
+                      </p>
+                    )}
                   </div>
                   <div className="mb-8 flex flex-col justify-between sm:flex-row sm:items-center">
                     <div>

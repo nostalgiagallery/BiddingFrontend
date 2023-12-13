@@ -7,6 +7,7 @@ import {
   updateUser,
   resetPasswordRequest,
   resetPassword,
+  signupRequest,
 } from "./authAPI";
 
 const initialState = {
@@ -23,6 +24,19 @@ export const createUserAsync = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await createUser(userData);
+
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const signupRequestAsync = createAsyncThunk(
+  "auth/signupRequest",
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await signupRequest(userData);
 
       return response.data;
     } catch (error) {
@@ -119,6 +133,18 @@ export const authSlice = createSlice({
         state.LoggedInUser = action.payload;
       })
       .addCase(createUserAsync.rejected, (state, action) => {
+        state.status = "rejected";
+        state.error = action.payload.message;
+      })
+      .addCase(signupRequestAsync.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(signupRequestAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.mailSent = true;
+      })
+      .addCase(signupRequestAsync.rejected, (state, action) => {
         state.status = "rejected";
         state.error = action.payload.message;
       })

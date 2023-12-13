@@ -131,3 +131,28 @@ export function updateUser(user) {
     resolve({ data });
   });
 }
+
+
+
+export function signupRequest(userData) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch("/auth/signup-request", {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        resolve({ data });
+      } else {
+        const error = await response.json();
+        reject(error);
+      }
+    } catch (error) {
+      // Handle other errors like network failure, etc.
+      reject(error);
+    }
+  });
+}
